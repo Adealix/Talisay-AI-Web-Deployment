@@ -1,0 +1,81 @@
+# ──────────────────────────────────────────────────────────────────────────
+# EAS Build Archive Exclusions
+# EAS only needs the Expo/React Native JS source + assets.
+# Everything else (Python ML backend, training data, server, deps) is excluded.
+# ──────────────────────────────────────────────────────────────────────────
+
+# ── Git repository history (19 GB — biggest culprit) ──────────────────────
+.git/
+
+# ── Python ML backend (largest contributor — PyTorch venv alone is ~5 GB) ──
+ml/
+
+# ── Node.js backend (separate server, not needed for APK) ──────────────────
+server/
+
+# ── npm / Node dependencies (rebuilt on EAS servers) ──────────────────────
+node_modules/
+**/node_modules/
+
+# ── Expo / Metro build outputs ──────────────────────────────────────────────
+.expo/
+dist/
+web-build/
+android/
+ios/
+.metro-health-check*
+
+# ── YOLO / ML model weights ─────────────────────────────────────────────────
+*.pt
+*.onnx
+*.engine
+*.weights
+*.keras
+*.h5
+*.tflite
+*.pb
+
+# ── YOLO training run artifacts ─────────────────────────────────────────────
+runs/
+
+# ── Backup folders ──────────────────────────────────────────────────────────
+MODELS_BACKUP_*/
+
+# ── Python cache / bytecode ─────────────────────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# ── Credentials & secrets (never upload) ────────────────────────────────────
+firebase-service-account.json
+*.keystore
+*.p12
+*.pem
+.env
+.env.*
+server/.env
+
+# ── Build artefacts & logs ───────────────────────────────────────────────────
+*.apk
+*.aab
+*.ipa
+*.log
+*.gz
+*.tar
+*.zip
+
+# ── Dev-only scripts & docs ──────────────────────────────────────────────────
+start-ngrok.ps1
+screenshots/
+docs/
+.DS_Store
+Thumbs.db
+*.ps1
+*.bat
+*.sh
+
+# Git internals
+.git/
