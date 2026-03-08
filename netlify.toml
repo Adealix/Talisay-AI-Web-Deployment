@@ -3,7 +3,10 @@
   publish   = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION             = "20"
+  EXPO_PUBLIC_API_URL      = "https://talisay-server-backend.onrender.com"
+  EXPO_PUBLIC_ML_API_URL   = "https://talisay-deployed.onrender.com"
+  EXPO_PUBLIC_GEMINI_API_KEY = "AIzaSyCIcVl2Bbz5kTfbY88eK0ziorMWVTYBYGs"
 
 # SPA fallback — Expo Router needs all paths to serve index.html
 [[redirects]]
