@@ -18,7 +18,8 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://talisay-server-backend.onrender.com",
-        "EXPO_PUBLIC_ML_API_URL": "https://talisay-deployed.onrender.com"
+        "EXPO_PUBLIC_ML_API_URL": "https://talisay-deployed.onrender.com",
+        "EXPO_PUBLIC_GEMINI_API_KEY": "AIzaSyDZ3yEXaOkwpseD1vswYU6TJ9YBeRGpmmg"
       }
     },
     "production": {
@@ -27,7 +28,8 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://talisay-server-backend.onrender.com",
-        "EXPO_PUBLIC_ML_API_URL": "https://talisay-deployed.onrender.com"
+        "EXPO_PUBLIC_ML_API_URL": "https://talisay-deployed.onrender.com",
+        "EXPO_PUBLIC_GEMINI_API_KEY": "AIzaSyDZ3yEXaOkwpseD1vswYU6TJ9YBeRGpmmg"
       }
     }
   },
