@@ -3,10 +3,11 @@
   publish   = "dist"
 
 [build.environment]
-  NODE_VERSION             = "20"
-  EXPO_PUBLIC_API_URL      = "https://talisay-server-backend.onrender.com"
-  EXPO_PUBLIC_ML_API_URL   = "https://talisay-deployed.onrender.com"
-  EXPO_PUBLIC_GEMINI_API_KEY = "AIzaSyCIcVl2Bbz5kTfbY88eK0ziorMWVTYBYGs"
+  NODE_VERSION           = "20"
+  EXPO_PUBLIC_API_URL    = "https://talisay-server-backend.onrender.com"
+  EXPO_PUBLIC_ML_API_URL = "https://talisay-deployed.onrender.com"
+  # EXPO_PUBLIC_GEMINI_API_KEY is set in Netlify Dashboard → Site Settings → Environment Variables
+  # NEVER commit API keys to git — set secrets in the Netlify UI only
 
 # SPA fallback — Expo Router needs all paths to serve index.html
 [[redirects]]
