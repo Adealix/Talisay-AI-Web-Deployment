@@ -120,15 +120,15 @@ const MATURITY_STAGES = [
     icon: 'leaf',
     label: 'Green',
     subtitle: 'Immature Stage',
-    oilYield: '24–39%',
-    oilMean: '~31.5%',
+    oilYield: '45–49%',
+    oilMean: '~47.0%',
     description:
       'The green stage represents an immature Talisay fruit where the kernel is still actively developing inside the husk. The outer shell remains firm, bright green, and moisture-rich. Oil content is the lowest across all three stages, making green fruits less suitable for oil extraction but valuable for studying early ripening physiology and tannin-rich by-products.',
     characteristics: [
       'Bright green, firm and moisture-rich outer husk',
       'Kernel still forming — lipid accumulation incomplete',
       'Highest moisture content of the three stages',
-      'Lowest oil yield: 24–39% of kernel weight',
+      'Lowest oil yield: 45–49% of kernel weight',
       'Elevated chlorophyll and tannin concentration',
     ],
     uses: ['Maturity research & phenology studies', 'Tannin and polyphenol extraction', 'Traditional herbal medicine (hull & leaf decoctions)'],
@@ -147,15 +147,15 @@ const MATURITY_STAGES = [
     icon: 'sunny',
     label: 'Yellow',
     subtitle: 'Mature Stage',
-    oilYield: '40–58.5%',
-    oilMean: '~49.3%',
+    oilYield: '57–60%',
+    oilMean: '~58.5%',
     description:
       'The yellow (mature) stage marks the transition to full ripeness. The outer husk softens and changes from green to yellow or yellowish-green. The kernel is now fully formed and holds a well-balanced oil content. This stage offers the best trade-off between oil quality and yield, making it the preferred choice for premium food-grade and cosmetic-grade oil production.',
     characteristics: [
       'Yellow to yellowish-green, slightly softened husk',
       'Fully developed kernel with balanced lipid profile',
       'Moderate moisture content',
-      'Good oil yield: 40–58.5% of kernel weight',
+      'Good oil yield: 57–60% of kernel weight',
       'Optimal fatty acid composition (oleic + linoleic balance)',
     ],
     uses: [
@@ -179,15 +179,15 @@ const MATURITY_STAGES = [
     icon: 'earth',
     label: 'Brown',
     subtitle: 'Overripe Stage',
-    oilYield: '51.2–65%',
-    oilMean: '~58.1%',
+    oilYield: '54–57%',
+    oilMean: '~55.5%',
     description:
       'The brown (overripe) stage is characterized by a fully dried, dark brown outer husk and the maximum concentration of oil in the kernel. All moisture has been lost, concentrating the lipids to their peak level. This stage delivers the highest extraction yield, making it the most economically valuable for industrial biodiesel and large-scale seed-to-oil processing — the primary focus of Talisay AI research.',
     characteristics: [
       'Dark brown, dried and cracked outer husk',
       'Maximum kernel oil concentration achieved',
       'Lowest moisture content of the three stages',
-      'Highest oil yield: 51.2–65% of kernel weight',
+      'Highest oil yield: 54–57% of kernel weight',
       'Ideal for industrial-scale and biodiesel extraction',
     ],
     uses: [

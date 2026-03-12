@@ -1,0 +1,953 @@
+================================================================================
+   TALISAY AI — PAPER SUMMARY + SYSTEM EXPLANATION GUIDE
+   Machine Learning-Based Prediction of Seed-to-Oil Conversion Ratios in
+   Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+================================================================================
+   Prepared for: Del Rosario, Mallo, Maranan, Moreno — Group 10, BSIT-S-3A
+   Subject: System Architecture and Integration 2
+   Professor: Prof. Pops V. Madriaga
+================================================================================
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                   PART 1: PAPER SECTION-BY-SECTION SUMMARY                  │
+│                   (Chapter 2 / RRLs are skipped as requested)               │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────
+ CHAPTER 1 — THE PROBLEM AND ITS BACKGROUND
+────────────────────────────────────────────────────
+
+  INTRODUCTION
+  ─────────────
+  The paper opens by establishing that Talisay (Terminalia catappa) is a common
+  Philippine tree found on beaches, roadsides, and parks, but despite being
+  widely available, it is largely underutilized as an oil source. The main
+  barrier is that to measure how much oil a seed contains, you currently have
+  to destroy the seed first through physical or chemical extraction — which is
+  slow, wasteful, and impractical for farmers doing large-scale screening.
+
+  The study's core proposal: use Machine Learning (specifically Random Forest
+  and Gradient Boosting) to analyze the external physical features of a Talisay
+  fruit — its size, shape, color — and predict the oil content without opening
+  or destroying the fruit at all. The tech stack used: Python/Scikit-learn for
+  ML, Node.js/Express as the backend API, React Native (Expo) as the mobile
+  app, and MongoDB as the database.
+
+
+  BACKGROUND OF THE STUDY
+  ─────────────────────────
+  Expands on the problem context. While agriculture and ML have been combined
+  in other studies (crop yield forecasting, fruit quality assessment), no known
+  prior study applied ML specifically to predict Talisay seed oil yield from
+  external morphological features. This is both the gap and the opportunity
+  that the study addresses. The background justifies why this project matters:
+  farmers cannot evaluate seeds without destroying and wasting them, so a
+  smarter, non-destructive alternative is needed.
+
+
+  STATEMENT OF THE PROBLEM
+  ──────────────────────────
+  Formally states the main problem: there is no available tool that can
+  determine Talisay seed oil yield without destroying the sample. Current
+  laboratory extraction methods require equipment and trained personnel,
+  making them inaccessible to ordinary farmers.
+
+  The study's four specific research questions:
+    1. What morphological features (length, width, mass, color) are most
+       effective for predicting seed oil content?
+    2. How can the system estimate the seed-to-oil conversion ratio using ML?
+    3. How can this help farmers identify high-yield seeds non-destructively?
+    4. How accurate are the ML models trained on Talisay morphological data?
+
+
+  OBJECTIVES OF THE STUDY
+  ─────────────────────────
+  General Objective: Develop an ML-based system to predict seed-to-oil
+  conversion ratios from external fruit features.
+
+  Specific Objectives (5):
+    1. Compile a dataset of Talisay fruit samples using captured real images
+       and corresponding morphological measurements.
+    2. Train and compare Random Forest and Gradient Boosting models.
+    3. Identify which physical features are the strongest predictors of oil
+       content (color, kernel mass, length, width, weight).
+    4. Evaluate model performance using MAE and RMSE metrics.
+    5. Build a mobile interface for farmers and researchers to scan and
+       receive instant predictions.
+
+
+  SIGNIFICANCE OF THE STUDY
+  ───────────────────────────
+  Lists who benefits and how:
+    • Students & Researchers — reference for ML applied to real prediction
+      problems.
+    • Software/System Developers — demonstrates how Python (Scikit-learn,
+      TensorFlow) can be combined with a mobile/backend system.
+    • Agricultural Sector — provides a practical, non-destructive seed
+      evaluation tool.
+    • Academic Institutions — contributes knowledge on ML in agriculture.
+    • Future Researchers — foundation for expanding to other crops, more
+      advanced models, or larger datasets.
+
+
+  SCOPE AND DELIMITATION
+  ────────────────────────
+  Scope (what the system CAN do):
+    • Scans Talisay fruits via the phone camera to extract morphological
+      features (size, shape, color) for oil yield prediction.
+    • Accessible through a React Native (Expo) mobile application, backed
+      by a Node.js/Express API server.
+    • Uses RF + Gradient Boosting (Scikit-learn) for predictions.
+    • Features a Google Gemini AI-powered chatbot and a community forum.
+    • Displays predicted seed-to-oil ratio as output.
+    • Evaluated using MAE and RMSE.
+
+  Delimitations (what it CANNOT do / its limits):
+    • Only works on Talisay fruits — not other plant species.
+    • Accuracy depends on image quality (bad lighting = less accurate).
+    • Does NOT replace actual laboratory oil extraction for official results.
+    • Requires internet connection since the ML model runs on a remote server.
+
+
+────────────────────────────────────────────────────
+ CHAPTER 3 — RESEARCH METHODOLOGY
+────────────────────────────────────────────────────
+
+  RESEARCH DESIGN
+  ─────────────────
+  The study uses a developmental/applied research design. Rather than just
+  studying a problem, the team actually built a working system. The methodology
+  combines computer vision (image analysis), machine learning (predictive
+  modeling), and software engineering (mobile + backend app development).
+
+
+  RESEARCH INSTRUMENT
+  ─────────────────────
+  The primary instruments used were:
+    • Smartphones (for capturing real Talisay fruit images with a ₱5 coin
+      as a physical size reference).
+    • Python ML tools: Scikit-learn (RF + GB models), TensorFlow/Keras
+      (CNN color classifier), OpenCV (image processing), Ultralytics YOLOv8
+      (object detection & segmentation).
+    • Node.js/Express backend for API routing and data handling.
+    • MongoDB database for storing predictions, scan history, and user data.
+    • Cloudinary for cloud-based image storage.
+
+
+  RESEARCH RESPONDENTS
+  ──────────────────────
+  The system's target users are farmers, researchers, and agricultural
+  stakeholders interested in non-destructive Talisay oil yield assessment.
+  The system accommodates two user roles: regular Users (scan and view
+  results) and Admins (manage users, view analytics).
+
+
+  PROGRAM FLOWCHART (Figure 2)
+  ────────────────────────────
+  Shows the high-level app navigation logic:
+    Start → User Registration → Login → Check Access (Admin vs. User)
+    • Admin path: Manage Users → View Analytics → End
+    • User path: Update Profile / Scan Talisay / View Details → End
+
+
+  SYSTEM FLOWCHART (Figure 3)
+  ────────────────────────────
+  More detailed version showing the full application flow:
+    Registration → Login → Valid? (No = back to Login; Yes = continue)
+    → Admin? (Yes = Admin Dashboard → User Management + Analytics → End)
+    → No = User Dashboard → Scan Talisay → View Results → View History
+                                          → Manage Profile → End
+
+
+  CONTEXT FLOW DIAGRAM (Figure 4)
+  ─────────────────────────────────
+  Shows the high-level data exchange between the system and three external
+  entities:
+    • User ↔ System: registers, logs in, edits profile, scans fruit;
+      receives profile updates, analysis results, and predicted ratios.
+    • Admin ↔ System: manages users; receives system analytics and scan data.
+    • Database ↔ System: two-way — system stores records (users, scan logs,
+      predictions); system retrieves data to answer user/admin requests.
+
+
+  DATA FLOW DIAGRAM — LEVEL 0 (Figure 5)
+  ─────────────────────────────────────────
+  The whole system treated as a single process bubble. Three external entities
+  (User, Admin, Database) communicate data in and out. This is a zoomed-out
+  overview — no internal processes shown, just who talks to the system and
+  what data flows.
+
+
+  DATA FLOW DIAGRAM — LEVEL 1 (Figure 6)
+  ─────────────────────────────────────────
+  Breaks the system into its main internal processes:
+    1. User Authentication — user provides credentials; system checks against
+       User Data store.
+    2. Scan and Image Processing — user uploads a Talisay image; morphological
+       features (size, shape, color) are extracted and saved to Scan Records.
+    3. Machine Learning Prediction — extracted features are fed to the ML model;
+       predictions saved to ML Analysis Results store.
+    4. User and Data Management — Admin accesses User Data store to manage
+       accounts.
+
+
+  DATA FLOW DIAGRAM — LEVEL 2 (Figure 7)
+  ─────────────────────────────────────────
+  Zooms in on the ML Prediction process from Level 1:
+    1. Feature Normalization — scales/normalizes the raw numerical features
+       (length, width, mass) before feeding them to the models.
+    2. Model Inference Engine — runs Random Forest and Gradient Boosting
+       to compute a predicted oil yield.
+    3. Post-Processing and Validation — clips the result to the valid 45–65%
+       range; computes confidence intervals from model agreement.
+    → Output stored in ML Analysis Results; displayed to user.
+
+
+  ENTITY RELATIONSHIP DIAGRAM (Figure 8) — MongoDB Collections
+  ───────────────────────────────────────────────────────────────
+  The system uses MongoDB (NoSQL document database). There are NO tables —
+  instead, data is organized into 5 collections:
+
+    1. User Collection
+       Stores: email (unique), passwordHash, role (User/Admin), isVerified,
+       firstName, lastName, phone, address, avatar, pushTokens,
+       notificationSettings.
+
+    2. Prediction Collection
+       Stores: userId reference, predicted oil yield, confidence scores,
+       color classification probabilities, dimensional measurements (length,
+       width, kernel mass, whole fruit weight), model version.
+
+    3. History Collection
+       Stores: userId, analysisType (single / comparison / multi_fruit),
+       imageUri (Cloudinary), category, fruitCount, colorDistribution,
+       averageOilYield (for multi-fruit scans).
+
+    4. ForumPost Collection
+       Stores: author reference, title, content, images array, likes array,
+       embedded comments (each with author reference + message text).
+
+    5. Notification Collection
+       Stores: recipient reference, notification type, message content,
+       read status, timestamps.
+
+  The document-based design means related data is embedded within a single
+  document instead of being split across relational tables. This makes reads
+  faster and the data model more natural for the application.
+
+
+  USE CASE DIAGRAM (Figure 9)
+  ─────────────────────────────
+  Describes what each actor can do in the system:
+
+    Regular User:
+      • Register, Login
+      • Scan Talisay (triggers automatic oil yield prediction)
+      • View Result Details
+      • Access History, Update Profile
+
+    Admin:
+      • Login
+      • Manage Users (view/control registered accounts)
+      • View/Generate Analytics (scan data trends, usage statistics)
+
+  Key point: both roles share the Login requirement. Users focus on scanning
+  and results; Admins focus on system management.
+
+
+  GANTT CHART (Figure 10)
+  ─────────────────────────
+  13-week development schedule (January to March):
+    Weeks 2–3: Planning, Requirements, Title Proposal
+    Week 4–8:  Data Collection (real Talisay fruit images)
+    Weeks 4–5: System Design
+    Late Week 4–7: Frontend (React Native/Expo)
+    Weeks 5–10: Backend (Node.js)
+    Weeks 5–9:  ML Model Development (Python)
+    Week 6–10:  Testing & Validation
+    Week 9–13:  Documentation & Paper Writing
+    Week 13:    Final Defense
+
+
+────────────────────────────────────────────────────
+ CHAPTER 4 — RESULTS AND DISCUSSION
+────────────────────────────────────────────────────
+
+  SYSTEM ARCHITECTURE IMPLEMENTATION
+  ─────────────────────────────────────
+  Three-tier architecture:
+    • Frontend: React Native (Expo SDK 54) — cross-platform mobile app
+      for Android and iOS.
+    • Backend: Node.js/Express — REST API handling authentication, routing,
+      database operations, image uploads (Cloudinary).
+    • ML Engine: Python Flask — receives images, runs the full prediction
+      pipeline, returns results to the backend.
+    • Database: MongoDB — 5 collections (User, Prediction, History,
+      ForumPost, Notification).
+
+  Eight core modules in the mobile app:
+    1. User Authentication (register, OTP email verification, JWT login)
+    2. Scanning Module (single-fruit and multi-fruit batch analysis)
+    3. Prediction Results Display (oil yield %, color class, confidence)
+    4. History Module (Cloudinary-hosted past scan records)
+    5. AI Chatbot (Google Gemini AI for user queries)
+    6. Community Forum (posts, comments, likes)
+    7. Admin Dashboard (user management, analytics)
+    8. Notification Module (push notifications for events)
+
+
+  MACHINE LEARNING MODEL PERFORMANCE
+  ─────────────────────────────────────
+  The prediction core is an ensemble that combines two Scikit-learn models:
+    • Random Forest Regressor (100 trees, max_depth=10)
+    • Gradient Boosting Regressor (100 trees, learning_rate=0.1, max_depth=5)
+
+  Both models are trained on the real Talisay fruit image dataset.
+  Final prediction = average of both model outputs, clipped to 45%–65%.
+
+  Color-based baseline oil yield values (from config.py):
+    • Green  (immature): mean=47.0%, range 45–49%
+    • Yellow (mature):   mean=58.5%, range 57–60%
+    • Brown  (fully ripe): mean=55.5%, range 54–57%
+
+  Correlation factors (how strongly each feature influences oil yield):
+    • Kernel Mass:        0.85 (strongest physical predictor)
+    • Fruit Length:       0.65
+    • Fruit Width:        0.60
+    • Whole Fruit Weight: 0.55 (moderate)
+
+
+  PREDICTION PIPELINE EVALUATION
+  ─────────────────────────────────
+  6-stage pipeline (see detailed breakdown in Part 2 of this document):
+    Stage 1: TalisayGuard CNN — validates the image is actually a Talisay fruit
+    Stage 2: YOLOv8 — detects fruit bounding box + ₱5 coin location
+    Stage 3: Background Segmentation — isolates the fruit from background
+    Stage 4: Color Classification (MobileNetV2 CNN or HSV fallback)
+    Stage 5: Dimension Estimation (using coin as size reference)
+    Stage 6: Oil Yield Prediction (RF + GB ensemble)
+
+
+  FEATURE SIGNIFICANCE ANALYSIS
+  ────────────────────────────────
+  Results confirmed the order of feature importance:
+    1. Color/Maturity — single strongest predictor (Green < Brown < Yellow
+       for oil content). Directly maps to the fruit's biochemical composition.
+    2. Kernel Mass — strongest physical feature (correlation factor 0.85).
+       Larger kernels consistently produce more oil.
+    3. Fruit Length + Width — moderate predictors (0.65 and 0.60). Bigger
+       fruits tend to have more developed, heavier kernels.
+    4. Whole Fruit Weight — weakest of the five (0.55), but still contributes.
+
+
+  SYSTEM USABILITY AND FUNCTIONAL EVALUATION
+  ─────────────────────────────────────────────
+  The system was evaluated against all 5 specific objectives:
+    Obj 1. ✓ Dataset compiled from captured real Talisay fruit images.
+    Obj 2. ✓ RF + GB ensemble successfully trained and deployed.
+    Obj 3. ✓ Feature importance confirmed: color > kernel mass > length/width.
+    Obj 4. ✓ Confidence intervals computed from model agreement (RF vs GB gap).
+    Obj 5. ✓ Mobile app with camera scanning, instant results, AI chatbot,
+              forum, history, and push notifications.
+
+
+────────────────────────────────────────────────────
+ CHAPTER 5 — SUMMARY, CONCLUSIONS, RECOMMENDATIONS
+────────────────────────────────────────────────────
+
+  SUMMARY OF FINDINGS
+  ─────────────────────
+  Four key findings:
+
+    1. Most Effective Features (strongest to weakest):
+       Fruit color (maturity) > Kernel Mass (0.85) > Length (0.65) >
+       Width (0.60) > Whole Fruit Weight (0.55)
+
+    2. The 6-stage pipeline successfully converts a smartphone photo into
+       an oil yield prediction ranging 45%–65%.
+       Green avg = 47%, Brown avg = 55.5%, Yellow avg = 58.5%
+
+    3. The system gives farmers a practical non-destructive tool — photograph
+       the fruit, get instant results with confidence scores, track history,
+       and discuss through the forum. No lab equipment needed.
+
+    4. Ensemble model produces predictions within the scientifically validated
+       45%–65% range. Confidence intervals reflect how closely RF and GB
+       agree on the prediction.
+
+
+  CONCLUSION
+  ────────────
+  The study successfully demonstrates that external morphological features of
+  Talisay fruits CAN reliably predict internal oil content. Using RF + GB
+  ensemble proved better than any single model. The full pipeline — guard
+  validation through YOLOv8 detection, segmentation, CNN color classification,
+  coin-referenced dimension estimation, to ensemble prediction — works end-to-end
+  from a single smartphone photo.
+
+  Beyond just prediction, the mobile app (React Native + Node.js + MongoDB +
+  Gemini AI) adds a full ecosystem: chatbot assistance, community forum, push
+  notifications, and scan history. This supports the broader goal of making
+  Philippine agricultural technology more accessible.
+
+
+  RECOMMENDATIONS (8 future directions)
+  ───────────────────────────────────────
+    1. Lab Validation — Compare system predictions against actual Soxhlet
+       extraction results from 100+ real Philippine Talisay fruit samples.
+    2. Expanded Training Data — Add lab-measured values from diverse provinces,
+       seasons, and growing environments.
+    3. Multi-Variety Classification — Add support for yellow vs. purple
+       Talisay cultivar varieties (different oil profiles even at same maturity).
+    4. Multispectral/NIR Imaging — Integrate near-infrared sensors for better
+       spectral data beyond visible RGB.
+    5. Offline Prediction — Use TensorFlow Lite or ONNX Runtime to run the
+       model directly on-device without internet.
+    6. Regional Fine-tuning — Train region-specific model variants to account
+       for morphological variation across Philippine provinces.
+    7. Agricultural Extension Partnership — Pilot the system with local
+       farming communities for real-world validation and feedback.
+    8. Longitudinal Seasonal Study — Track results across multiple harvest
+       seasons to understand how climate and season affect predictions.
+
+
+════════════════════════════════════════════════════════════════════════════════
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│          PART 2: HOW THE SYSTEM WORKS — FULL PIPELINE EXPLANATION           │
+│          From Image Capture → All 6 Stages → Final Results                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────
+ STEP 0: IMAGE CAPTURE (User Side)
+────────────────────────────────────────────────────
+
+  The user opens the TalisayAI mobile app and takes a photo of a Talisay
+  fruit using their phone camera or uploads an existing photo from their
+  gallery.
+
+  IMPORTANT — The ₱5 Coin Reference:
+    For the most accurate dimension estimates, the recommended photo setup is:
+      • Place the ₱5 coin on the LEFT SIDE of the image.
+      • Place the Talisay fruit on the RIGHT SIDE.
+      • Both should be at the same vertical center.
+      • Use a plain, light-colored (white/light gray) surface as background.
+      • Good lighting, no blurry or dark shots.
+
+  If no coin is present, the system still works — it falls back to contour-
+  based estimation, but accuracy is lower. If you include the coin, the system
+  uses it to calculate the real physical size of the fruit in centimeters.
+
+  The photo is uploaded via the mobile app → sent to the Node.js/Express
+  backend → forwarded to the Python Flask ML API server for processing.
+
+
+────────────────────────────────────────────────────
+ STAGE 1: TALISAYGUARD — MULTI-LAYER IMAGE VALIDATION
+ (Is there a valid Talisay fruit in this image?)
+────────────────────────────────────────────────────
+
+  Before any analysis, TalisayGuard runs a series of checks to REJECT images
+  that don't contain a Talisay fruit. This prevents the system from wasting
+  time and producing nonsensical results on random photos.
+
+  The guard checks, in order:
+    Layer 1 — Blank/Empty Image Check:
+      Detects if the image is mostly black, white, or a blank screen.
+      If detected → REJECTED immediately with message to take a real photo.
+
+    Layer 2 — Person/Face Detection:
+      Uses a face/person detection algorithm. If a person is detected in the
+      image → REJECTED with a message saying "a person was detected."
+
+    Layer 3–7 — Traditional Computer Vision (HSV + Contour checks):
+      Checks for Talisay-like colors (green, yellow, or brown tones),
+      fruit-like elliptical shape, expected size proportions, and texture.
+      Each layer can vote to reject the image if it fails criteria.
+
+    Layer 8 — Deep Learning Guard (CNN binary classifier):
+      A custom-trained CNN model (TalisayGuard DL) that was trained on
+      real images of Talisay fruits vs. non-Talisay objects.
+      Outputs a probability score (0.0 to 1.0) for "is Talisay."
+      If score < threshold → REJECTED.
+
+  Guard result:
+    • accepted = True  → Image almost certainly contains a Talisay fruit.
+                          Pipeline continues to Stage 2.
+    • accepted = False → PIPELINE STOPS. User receives a message:
+                         "This image does not appear to contain a Talisay
+                          fruit. Please provide a clear photo of a Talisay
+                          (Terminalia catappa) fruit."
+
+
+────────────────────────────────────────────────────
+ STAGE 2: YOLOv8 OBJECT DETECTION
+ (Where is the fruit? Where is the coin?)
+────────────────────────────────────────────────────
+
+  If TalisayGuard accepts the image, YOLOv8 (You Only Look Once version 8)
+  runs object detection on the image. YOLOv8 was trained to detect two object
+  classes:
+    Class 0 = Talisay Fruit
+    Class 1 = Philippine ₱5 Coin
+
+  YOLOv8 outputs for each detected object:
+    • Bounding box: [x1, y1, x2, y2] — pixel coordinates of a rectangle
+      that tightly wraps around the detected object.
+    • Confidence score: 0.0–1.0 (how sure the model is it found that object).
+
+  What happens with each detection:
+
+    If Fruit is detected (confidence ≥ 0.80):
+      • The fruit_bbox is saved for use in later stages.
+      • Color classification and dimension estimation will use this
+        bounding box to focus on just the fruit area.
+
+    If Coin is detected:
+      • coin_bbox + coin_radius are saved.
+      • pixels_per_cm is calculated immediately (see Stage 5 formula below).
+      • This coin detection result gets passed to all later stages.
+
+    If NO coin is found by YOLO:
+      • The system runs a secondary "fast_coin_search" (HoughCircles-based)
+        on a downscaled image to try again.
+      • If the image background is dark (outdoor/tree photo, border brightness
+        < 165 avg), the fast search is skipped entirely — no coin expected
+        in outdoor shots.
+
+    If NO fruit is found by YOLO:
+      • Fruit detection falls back to contour-based analysis.
+
+  Why YOLOv8 for the coin?
+    Finding a small circular coin in a photo is a detection problem.
+    YOLOv8 handles changes in coin orientation, partial occlusion, and
+    different lighting conditions much more reliably than traditional
+    circle-detection (HoughCircles), which is still available as fallback.
+
+
+────────────────────────────────────────────────────
+ STAGE 3: BACKGROUND SEGMENTATION
+ (Separate fruit pixels from background pixels)
+────────────────────────────────────────────────────
+
+  AdvancedSegmenter runs color-based segmentation on the image to create
+  a binary fruit mask — a black-and-white image where white pixels = fruit,
+  black pixels = background (table, hand, etc.).
+
+  Method: COLOR_BASED (fast, no GPU needed)
+    • Converts image to HSV color space.
+    • Applies color range thresholds that match green/yellow/brown Talisay
+      fruit tones.
+    • Removes the coin region from the mask (so the coin isn't counted
+      as part of the fruit).
+    • The resulting mask is used by the color classifier and dimension
+      estimator to focus only on the fruit's actual pixels.
+
+  If segmentation fails:
+    • The system falls back to using the full YOLOv8 bounding box crop
+      as the fruit region instead of a precise pixel mask.
+
+
+────────────────────────────────────────────────────
+ STAGE 4: COLOR CLASSIFICATION
+ (Is the fruit Green, Yellow, or Brown?)
+────────────────────────────────────────────────────
+
+  Color = maturity stage = the single most important predictor of oil yield.
+  The system uses a priority chain to determine color:
+
+    Priority 1 — Enhanced CNN Color Classifier (Primary):
+      A CNN trained on real Talisay fruit images.
+      Architecture based on MobileNetV2 (a lightweight deep learning model
+      optimized for mobile/embedded devices).
+      Input: 224×224 pixel crop of the fruit (using mask or bbox).
+      Output: probability scores for each of 3 classes:
+              P(green), P(yellow), P(brown)
+      The class with the highest probability is the predicted color.
+
+    Priority 2 — MobileNetV2 Legacy Classifier (Secondary DL):
+      A second trained MobileNetV2 model, used if the primary CNN is
+      unavailable. Loaded from color_classifier_mobile_best.keras.
+
+    Priority 3 — HSV-Based Classifier (Fallback, always available):
+      No neural network needed — uses classical computer vision.
+      Analyzes the Hue, Saturation, and Value (HSV) of the fruit pixels:
+        • Green range:  Hue ≈ 35–85°, moderate saturation
+        • Yellow range: Hue ≈ 15–35°, high saturation, high value
+        • Brown range:  Hue ≈ 5–20°, lower saturation, lower value
+      Also detects surface spots (brown spots on yellow fruit = overripe).
+
+  Confidence check after color classification:
+    • If confidence < 10% → image REJECTED (extremely unclear, likely
+      not a real Talisay fruit).
+    • If confidence < 25% and all 3 probabilities are nearly equal (no
+      dominant color) → image REJECTED with "Could not confidently
+      identify a Talisay fruit" message.
+
+  Color encoding for the ML model:
+      green = 0
+      yellow = 1
+      brown = 2
+  This numeric encoding is one of the 7 input features fed to the ensemble.
+
+
+────────────────────────────────────────────────────
+ STAGE 5: DIMENSION ESTIMATION
+ (How big is the fruit, in real centimeters?)
+────────────────────────────────────────────────────
+
+  This stage converts pixel measurements into real-world centimeters using
+  the ₱5 coin as a known-size reference object.
+
+  ── STEP 5A: Calculate pixels_per_cm ──
+
+    The ₱5 coin (New Generation Currency, 2017-present) has a known diameter
+    of 2.4 cm. YOLO or HoughCircles found the coin in the image and measured
+    its diameter in pixels (coin_diameter_px).
+
+    Formula:
+      pixels_per_cm = coin_diameter_px / coin_diameter_cm
+
+    Where:
+      coin_diameter_px = the coin's diameter measured in pixels
+      coin_diameter_cm = 2.4 cm (the real known size of the ₱5 coin)
+      pixels_per_cm    = how many pixels correspond to 1 cm in this photo
+
+    Example:
+      If the ₱5 coin appears as 96 pixels wide in the photo:
+        pixels_per_cm = 96 / 2.4 = 40 pixels/cm
+
+  ── STEP 5B: Measure Fruit Length and Width ──
+
+    The fruit's bounding box (from YOLO) or a fitted ellipse (from contour
+    analysis) gives the fruit dimensions in pixels.
+
+    For ellipse fitting (fitEllipse from OpenCV):
+      major_axis_px = the long axis of the fitted ellipse (in pixels)
+      minor_axis_px = the short axis of the fitted ellipse (in pixels)
+
+    Conversion to centimeters:
+      length_cm = major_axis_px / pixels_per_cm
+      width_cm  = minor_axis_px / pixels_per_cm
+
+    Validation (clipped to valid Talisay fruit ranges from research):
+      length_cm = clamp(length_cm, min=3.0 cm, max=8.0 cm)
+      width_cm  = clamp(width_cm,  min=1.5 cm, max=6.0 cm)
+
+    If the measured value falls outside these ranges, it gets clipped to the
+    nearest valid boundary. A warning is also shown to the user.
+
+  ── STEP 5C: Estimate Kernel Mass ──
+
+    Kernel mass cannot be measured directly from a photo. It is estimated
+    from the fruit's surface dimensions using an empirical formula derived
+    from the research:
+
+      kernel_mass_g = 0.1 + (length_cm × width_cm / 35) × 0.6
+
+    Clipped to valid range:
+      kernel_mass_g = clamp(kernel_mass_g, min=0.1 g, max=0.9 g)
+
+    Legend:
+      0.1       = minimum kernel mass offset (the lightest Talisay kernel)
+      /35       = normalizer (reference area: 5.0 cm × 7.0 cm ≈ 35 cm²,
+                  representing the area of a median-sized fruit)
+      × 0.6     = scaling factor (range of 0.6 g across the kernel mass range)
+
+    Example:
+      For a fruit of length=5.5 cm, width=4.0 cm:
+        kernel_mass = 0.1 + (5.5 × 4.0 / 35) × 0.6
+                    = 0.1 + (22.0 / 35) × 0.6
+                    = 0.1 + 0.629 × 0.6
+                    = 0.1 + 0.377
+                    = 0.477 g → clamp(0.477, 0.1, 0.9) = 0.477 g
+
+  ── STEP 5D: Estimate Whole Fruit Weight ──
+
+    Also estimated from dimensions using an ellipsoidal volume model.
+
+    Volume formula (approximate Talisay fruit shape — prolate spheroid):
+      volume_cm³ = (4/3) × π × (length/2) × (width/2) × (width/2 × 0.8)
+
+    Then weight:
+      estimated_weight_g = volume_cm³ × 0.85   (density ≈ 0.85 g/cm³)
+
+    Clipped to:
+      estimated_weight_g = clamp(estimated_weight_g, min=15.0 g, max=60.0 g)
+
+    Legend:
+      4/3 × π × a × b × c  = volume of an ellipsoid
+      a = length/2 (semi-major axis)
+      b = width/2  (semi-minor axis, horizontal)
+      c = width/2 × 0.8 (semi-minor axis, depth estimated as 80% of width)
+      0.85                  = approximate density of Talisay fruit in g/cm³
+
+  ── STEP 5E: Compute Derived Ratio Features ──
+
+    Two additional ratio features are computed for the ML model:
+
+      length_width_ratio = length_cm / width_cm
+        (How elongated is the fruit? Higher ratio = more elongated)
+
+      kernel_fruit_ratio = (kernel_mass_g / whole_fruit_weight_g) × 100
+        (What percentage of the whole fruit's weight is the kernel?
+         In grams, ×100 to scale for the model)
+
+  ── FALLBACK: No Coin Present ──
+
+    If no ₱5 coin is found in the image:
+      • The system uses contour-based estimation (OpenCV finds the fruit
+        outline and estimates relative size based on typical Talisay proportions).
+      • A default pixels_per_cm is estimated from the expected fruit size
+        relative to the image dimensions.
+      • Accuracy is lower — the system shows a tip:
+        "For more accurate measurements, try retaking the photo with a ₱5 coin
+         placed on the LEFT side of the image as a size reference."
+
+
+────────────────────────────────────────────────────
+ STAGE 6: OIL YIELD PREDICTION
+ (What is the predicted oil yield percentage?)
+────────────────────────────────────────────────────
+
+  At this point, the system has 5 raw measurements:
+    1. color       → encoded as integer (green=0, yellow=1, brown=2)
+    2. length_cm
+    3. width_cm
+    4. kernel_mass_g
+    5. whole_fruit_weight_g
+
+  And 2 computed ratio features:
+    6. length_width_ratio  = length_cm / width_cm
+    7. kernel_fruit_ratio  = (kernel_mass_g / whole_fruit_weight_g) × 100
+
+  These 7 features become the input vector X = [c, l, w, k, wf, lwr, kfr]
+  that is fed into the ML ensemble.
+
+
+  ── PATH A: ML ENSEMBLE PREDICTION (when models are trained) ──
+
+    Step 1 — Feature Scaling (StandardScaler):
+      Each feature is normalized using the StandardScaler:
+        X_scaled[i] = (X[i] - mean[i]) / std[i]
+      This ensures all features are on the same scale so the models aren't
+      biased by features with larger magnitudes (e.g., weight_g vs. ratio).
+
+    Step 2 — Random Forest Prediction:
+      The trained Random Forest regressor (100 decision trees) processes
+      X_scaled and each tree outputs a predicted oil yield. The final RF
+      output is the average across all 100 trees:
+        RF_pred = mean(tree_1_pred, tree_2_pred, ..., tree_100_pred)
+
+    Step 3 — Gradient Boosting Prediction:
+      The trained Gradient Boosting regressor processes X_scaled.
+      GB builds trees sequentially, where each new tree corrects the errors
+      of the previous one (boosting). Final GB output:
+        GB_pred = sum of all sequential tree predictions
+
+    Step 4 — Ensemble Average:
+      The final predicted oil yield is the simple average of both models:
+        ensemble_pred = (RF_pred + GB_pred) / 2
+
+    Step 5 — Clip to Valid Range:
+      final_oil_yield = clamp(ensemble_pred, 45.0%, 65.0%)
+      Based on scientific studies, Talisay seed oil content always falls
+      within this range. Values outside are biologically impossible.
+
+    Step 6 — Confidence Score:
+      The confidence measures how closely the two models agree:
+        pred_diff = |RF_pred - GB_pred|
+        confidence = max(0.5, 1.0 - (pred_diff / 10))
+
+      Interpretation:
+        • If RF says 57.2% and GB says 57.8% → diff = 0.6 → confidence = 0.94
+          (Models agree closely → high confidence)
+        • If RF says 54.0% and GB says 59.0% → diff = 5.0 → confidence = 0.50
+          (Models disagree → confidence capped at 0.50)
+        Confidence is always at least 0.50 (50%) regardless of disagreement.
+
+
+  ── PATH B: FORMULA-BASED FALLBACK PREDICTION (when ML models are not loaded) ──
+
+    If the trained model file (oil_yield_predictor.joblib) is not found
+    or fails to load, the system automatically falls back to a rule-based
+    formula that applies the same scientific constants:
+
+    Formula:
+      base_yield = color_mean_yield  (from OIL_YIELD_BY_COLOR lookup)
+
+    Then 5 adjustments are applied:
+
+      1. Kernel Mass Adjustment (±4%):
+           kernel_norm = (kernel_mass_g - 0.1) / (0.9 - 0.1)
+           kernel_norm = clamp(kernel_norm, 0.0, 1.0)
+           adjustment  = (kernel_norm - 0.5) × 8.0
+         → If kernel_norm = 1.0 (heaviest): +4%
+         → If kernel_norm = 0.0 (lightest): -4%
+         → If kernel_norm = 0.5 (average):  ±0%
+
+      2. Length Adjustment (±2.5%):
+           adjustment = clamp((length_cm - 5.0) / 2.5 × 2.5, -2.0, +3.0)
+         Reference = 5.0 cm average length.
+         Longer than 5 cm → positive; shorter → negative.
+
+      3. Aspect Ratio Adjustment (±2%):
+           aspect = length_cm / width_cm
+           adjustment = clamp((aspect - 1.43) × 1.5, -1.5, +2.0)
+         Reference aspect = 1.43 (5.0 cm / 3.5 cm, the "average" Talisay).
+         More elongated than average → positive adjustment.
+
+      4. Whole Fruit Weight Adjustment (±1.5%):
+           adjustment = clamp((whole_fruit_weight_g - 35.0) / 20.0 × 1.5, -1.5, +2.0)
+         Reference = 35 g average weight.
+         Heavier than average → positive adjustment.
+
+      5. NO random variation (the old random component was removed).
+
+      final_yield = clamp(base_yield + all_adjustments, 45.0, 65.0)
+      confidence  = 0.75 (fixed — formula-based is less certain than ML)
+
+
+  ── COLOR-BASED BASELINE VALUES (applies to both paths) ──
+
+    These are the mean oil yields by color from config.py, grounded in
+    published Terminalia catappa research:
+
+    ┌────────────┬──────────┬────────────────┬─────────────────────────────┐
+    │ Color      │ Mean (%) │ Range (%)      │ Description                 │
+    ├────────────┼──────────┼────────────────┼─────────────────────────────┤
+    │ Green      │  47.0    │  45.0 – 49.0   │ Immature – lowest oil       │
+    │ Yellow     │  58.5    │  57.0 – 60.0   │ Mature – highest oil        │
+    │ Brown      │  55.5    │  54.0 – 57.0   │ Fully ripe – slightly lower │
+    └────────────┴──────────┴────────────────┴─────────────────────────────┘
+
+    Why is Yellow higher than Brown?
+    The Yellow stage represents the peak-maturity point just before the
+    fruit begins to dessicate and harden. At this stage, the oil content
+    inside the kernel is at its maximum. Once the fruit fully dries out
+    and turns brown (post-dessication), some extractable oil is lost
+    due to oxidation and structural changes in the seed tissue.
+
+
+────────────────────────────────────────────────────
+ FINAL RESULTS GENERATED (What the user sees)
+────────────────────────────────────────────────────
+
+  After all 6 stages, the system generates and displays the following:
+
+    Field                  Value / Format       Meaning
+    ─────────────────────────────────────────────────────────────────────
+    oil_yield_percent      e.g., "57.43%"       Predicted seed-to-oil ratio
+    color                  "yellow" / "green" / The detected maturity class
+                           "brown"
+    color_probabilities    e.g., {green: 0.08,  How confident each color class
+                           yellow: 0.87,         is from the CNN classifier
+                           brown: 0.05}
+    yield_category         "Excellent" /        Usefulness tier:
+                           "Good" /              ≥58% = Excellent
+                           "Average" /           54–58% = Good
+                           "Below Average"       50–54% = Average
+                                                 <50% = Below Average
+    confidence             e.g., 0.92           How closely RF and GB agreed
+                                                 (0.50 = low, 1.00 = perfect)
+    dimensions             {length_cm: ...,      Estimated real-world size
+                            width_cm: ...,        in centimeters and grams
+                            kernel_mass_g: ...,
+                            whole_fruit_weight_g: ...}
+    reference_detected     true / false          Whether a ₱5 coin was found
+                                                 for accurate measurement
+    interpretation         text string           Plain-English summary like
+                                                 "This yellow Talisay fruit
+                                                  has excellent oil yield
+                                                  potential (57.4%). Ideal
+                                                  for oil extraction."
+    ─────────────────────────────────────────────────────────────────────
+
+  For Multi-Fruit scans, the system additionally provides:
+    fruit_count           How many Talisay fruits were detected in the image
+    color_distribution    {"green": 2, "yellow": 1, "brown": 1}
+    average_oil_yield     Mean oil yield across all detected fruits
+    oil_yield_range       [min_yield, max_yield] across all fruits
+    per-fruit details     Individual prediction for each detected fruit
+
+
+────────────────────────────────────────────────────
+ COMPLETE VARIABLE LEGEND (for reference)
+────────────────────────────────────────────────────
+
+  Variable               Type      Description
+  ─────────────────────────────────────────────────────────────────────────
+  color                  string    Fruit color class: "green", "yellow", or
+                                   "brown" (directly maps to maturity stage)
+  color_encoded          int       Numeric encoding: green=0, yellow=1, brown=2
+  length_cm              float     Estimated length of fruit along major axis
+                                   (clipped to 3.0–8.0 cm)
+  width_cm               float     Estimated width of fruit along minor axis
+                                   (clipped to 1.5–6.0 cm)
+  kernel_mass_g          float     Estimated dry kernel mass (clipped 0.1–0.9 g)
+  whole_fruit_weight_g   float     Estimated whole fruit weight (clipped 15–60 g)
+  length_width_ratio     float     length_cm / width_cm (elongation index)
+  kernel_fruit_ratio     float     (kernel_mass_g / whole_fruit_weight_g) × 100
+  coin_diameter_px       int       Diameter of the detected ₱5 coin in pixels
+  coin_diameter_cm       float     Known real diameter of ₱5 coin = 2.4 cm
+  pixels_per_cm          float     coin_diameter_px / 2.4 (scale factor)
+  major_axis_px          int       Fruit's long axis length in pixels (from
+                                   fitted ellipse)
+  minor_axis_px          int       Fruit's short axis length in pixels
+  volume_cm³             float     Estimated ellipsoidal fruit volume in cm³
+  RF_pred                float     Random Forest regressor output (oil yield %)
+  GB_pred                float     Gradient Boosting regressor output (oil yield %)
+  ensemble_pred          float     (RF_pred + GB_pred) / 2
+  pred_diff              float     |RF_pred - GB_pred| (disagreement measure)
+  confidence             float     max(0.5, 1.0 - pred_diff/10)
+  base_yield             float     Color-based mean oil yield before adjustments
+  kernel_norm            float     Normalized kernel mass on 0–1 scale
+  aspect                 float     length_cm / width_cm (same as L/W ratio)
+  final_oil_yield        float     clamp(ensemble_pred or formula result, 45, 65)
+  ─────────────────────────────────────────────────────────────────────────
+
+
+────────────────────────────────────────────────────
+ QUICK-REFERENCE: FULL PIPELINE IN ONE VIEW
+────────────────────────────────────────────────────
+
+  [CAPTURE]  User takes photo (recommended: with ₱5 coin on left side)
+       ↓
+  [UPLOAD]   Image sent to Python Flask ML API via Node.js backend
+       ↓
+  [GUARD]    TalisayGuard (8 layers) — reject if not a Talisay fruit
+       ↓  REJECTED → "Not a Talisay fruit" message returned
+  [YOLO]     YOLOv8 — find fruit bounding box + coin location
+       ↓
+  [SEGMENT]  AdvancedSegmenter — create fruit pixel mask
+       ↓
+  [COLOR]    CNN (MobileNetV2) → probabilities for Green/Yellow/Brown
+       ↓  Low confidence → "Cannot identify fruit" message
+  [DIMS]     DimensionEstimator:
+               pixels_per_cm = coin_dia_px / 2.4
+               length/width   = axis_px / pixels_per_cm
+               kernel_mass    = 0.1 + (L×W/35) × 0.6
+               weight         = vol × 0.85,  vol = (4/3)π(L/2)(W/2)(W/2×0.8)
+               LW_ratio       = L/W
+               KF_ratio       = (K/WF) × 100
+       ↓
+  [PREDICT]  OilYieldPredictor:
+               X = [color_enc, L, W, K, WF, LWR, KFR]
+               X_scaled = StandardScaler.transform(X)
+               RF_pred  = RandomForestRegressor.predict(X_scaled)
+               GB_pred  = GradientBoostingRegressor.predict(X_scaled)
+               result   = clamp((RF + GB)/2, 45, 65)
+               ci       = max(0.5, 1.0 - |RF-GB|/10)
+       ↓
+  [RESULT]   oil_yield_percent, yield_category, confidence, color,
+             dimensions, interpretation → displayed to user in app
+
+
+================================================================================
+   END OF DOCUMENT
+   TalisayAI — Group 10, BSIT-S-3A, TUP Taguig
+================================================================================

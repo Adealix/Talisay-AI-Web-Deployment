@@ -1,0 +1,258 @@
+================================================================================
+   TALISAY AI — OIL YIELD CALCULATION: SIMPLIFIED SOLUTION GUIDE
+   Single Analysis Scan — Green, Yellow, and Brown Fruits
+================================================================================
+
+
+────────────────────────────────────────────────────
+ VARIABLES (Inputs to the Formula)
+────────────────────────────────────────────────────
+
+  Symbol   Name                        Unit    Valid Range
+  ──────────────────────────────────────────────────────────
+  C        Fruit Color / Maturity      —       Green / Yellow / Brown
+  L        Fruit Length                cm      3.0 – 8.0 cm
+  W        Fruit Width                 cm      1.5 – 6.0 cm
+  K        Estimated Kernel Mass       g       0.1 – 0.9 g
+  WF       Estimated Whole Fruit Wt.   g       15.0 – 60.0 g
+
+  NOTE: L, W, K, and WF are all estimated from the photo using the
+  five-peso (P5) coin as the real-world size reference. These values
+  directly push the final oil yield up or down from the color baseline.
+
+
+────────────────────────────────────────────────────
+ THE FORMULA
+────────────────────────────────────────────────────
+
+  y_hat = Y_base + dK + dL + dA + dW
+
+  Then always clipped to the scientifically valid range:
+
+  y_final = clamp(y_hat, 45%, 65%)
+
+
+  Where each term is:
+
+  Term     Name                  How it's computed                        Max effect
+  ──────────────────────────────────────────────────────────────────────────────────
+  Y_base   Color baseline yield  Looked up from color:                    Dominant
+                                   Green  = 47.0%
+                                   Yellow = 58.5%
+                                   Brown  = 55.5%
+
+  dK       Kernel mass adj.      From K relative to range 0.1–0.9 g      ±2%
+             kernel_norm = (K - 0.1) / (0.9 - 0.1)       → 0.0 to 1.0
+             dK          = (kernel_norm - 0.5) × 4.0      → -2% to +2%
+
+  dL       Length adjustment     clamp(L - 5.0, -2.0, +3.0)              -2% to +3%
+             Longer than 5 cm average → positive
+             Shorter than 5 cm → negative
+
+  dA       Aspect ratio adj.     clamp((L/W - 1.43) × 1.5, -1.5, +2.0)  ±2%
+             L/W = elongation ratio of the fruit
+             1.43 = reference ratio (5.0 cm / 3.5 cm = average Talisay)
+             More elongated than 1.43 → positive
+
+  dW       Whole-fruit wt. adj.  clamp((WF - 35.0) / 20.0 × 1.5,        ±1.5%
+                                         -1.5, +2.0)
+             Heavier than 35 g average → positive
+             Lighter than 35 g → negative
+
+  Reference values (the "average" Talisay fruit):
+    L = 5.0 cm,  W = 3.5 cm,  aspect = 1.43,  WF = 35 g
+  A fruit bigger/heavier than these pushes yield UP.
+  A fruit smaller/lighter pushes yield DOWN.
+
+
+────────────────────────────────────────────────────
+ EXAMPLE A — GREEN FRUIT (Immature)
+────────────────────────────────────────────────────
+
+  Sample fruit:  L = 4.5 cm,  W = 3.0 cm,  K = 0.35 g,  WF = 28 g
+
+  Step         Calculation                                        Value
+  ─────────────────────────────────────────────────────────────────────
+  Y_base       Green baseline                                     47.00%
+
+  dK           kernel_norm = (0.35 - 0.1) / 0.8 = 0.313
+               dK = (0.313 - 0.5) × 4.0 = -0.750                -0.75%
+
+  dL           clamp(4.5 - 5.0, -2.0, +3.0) = -0.500            -0.50%
+
+  dA           4.5 / 3.0 = 1.500
+               clamp((1.500 - 1.43) × 1.5, -1.5, +2.0) = +0.105 +0.11%
+
+  dW           clamp((28 - 35) / 20 × 1.5, -1.5, +2.0) = -0.525 -0.53%
+  ─────────────────────────────────────────────────────────────────────
+  Sum:         47.00 - 0.75 - 0.50 + 0.11 - 0.53              = 45.33%
+  Clamp:       45.33% is within [45%, 65%]
+
+  RESULT:  45.33%   |   Category: Below Average
+
+  Interpretation: Immature fruit with a small kernel and low weight.
+  Nearly hits the biological minimum floor of 45%.
+
+
+────────────────────────────────────────────────────
+ EXAMPLE B — YELLOW FRUIT (Mature / Peak Yield)
+────────────────────────────────────────────────────
+
+  Sample fruit:  L = 5.5 cm,  W = 4.0 cm,  K = 0.55 g,  WF = 42 g
+
+  Step         Calculation                                        Value
+  ─────────────────────────────────────────────────────────────────────
+  Y_base       Yellow baseline                                    58.50%
+
+  dK           kernel_norm = (0.55 - 0.1) / 0.8 = 0.563
+               dK = (0.563 - 0.5) × 4.0 = +0.250                +0.25%
+
+  dL           clamp(5.5 - 5.0, -2.0, +3.0) = +0.500            +0.50%
+
+  dA           5.5 / 4.0 = 1.375
+               clamp((1.375 - 1.43) × 1.5, -1.5, +2.0) = -0.082 -0.08%
+
+  dW           clamp((42 - 35) / 20 × 1.5, -1.5, +2.0) = +0.525 +0.53%
+  ─────────────────────────────────────────────────────────────────────
+  Sum:         58.50 + 0.25 + 0.50 - 0.08 + 0.53              = 59.70%
+  Clamp:       59.70% is within [45%, 65%]
+
+  RESULT:  59.69%   |   Category: Excellent
+
+  Interpretation: A well-developed mature fruit with good dimensions.
+  Comfortably in the "Excellent" tier (>=58%).
+
+
+────────────────────────────────────────────────────
+ EXAMPLE C — BROWN FRUIT (Fully Ripe)
+────────────────────────────────────────────────────
+
+  Sample fruit:  L = 6.0 cm,  W = 4.2 cm,  K = 0.65 g,  WF = 50 g
+
+  Step         Calculation                                        Value
+  ─────────────────────────────────────────────────────────────────────
+  Y_base       Brown baseline                                     55.50%
+
+  dK           kernel_norm = (0.65 - 0.1) / 0.8 = 0.688
+               dK = (0.688 - 0.5) × 4.0 = +0.750                +0.75%
+
+  dL           clamp(6.0 - 5.0, -2.0, +3.0) = +1.000            +1.00%
+
+  dA           6.0 / 4.2 = 1.429
+               clamp((1.429 - 1.43) × 1.5, -1.5, +2.0) ≈ 0.000  ~0.00%
+
+  dW           clamp((50 - 35) / 20 × 1.5, -1.5, +2.0) = +1.125 +1.13%
+  ─────────────────────────────────────────────────────────────────────
+  Sum:         55.50 + 0.75 + 1.00 + 0.00 + 1.13              = 58.38%
+  Clamp:       58.38% is within [45%, 65%]
+
+  RESULT:  58.37%   |   Category: Excellent
+
+  Interpretation: A large, heavy, fully ripe fruit. Despite the lower
+  Brown baseline (55.5%), its big size drives it into "Excellent" territory.
+
+
+────────────────────────────────────────────────────
+ SUMMARY TABLE
+────────────────────────────────────────────────────
+
+  Color    Sample Dimensions              Y_base   Adjustments   Final Yield  Category
+  ──────────────────────────────────────────────────────────────────────────────────────
+  Green    L=4.5, W=3.0, K=0.35g, WF=28g  47.00%    -1.67%        45.33%    Below Average
+  Yellow   L=5.5, W=4.0, K=0.55g, WF=42g  58.50%    +1.20%        59.69%    Excellent
+  Brown    L=6.0, W=4.2, K=0.65g, WF=50g  55.50%    +2.87%        58.37%    Excellent
+
+
+────────────────────────────────────────────────────
+ YIELD CATEGORY THRESHOLDS
+────────────────────────────────────────────────────
+
+  Range              Category
+  ────────────────────────────
+  >= 58.0%           Excellent
+  54.0% – 57.9%      Good
+  50.0% – 53.9%      Average
+  45.0% – 49.9%      Below Average
+
+
+────────────────────────────────────────────────────
+ CONFIDENCE LEVEL — HOW IT IS COMPUTED
+────────────────────────────────────────────────────
+
+  The Confidence IS NOT derived from the oil yield percentage itself.
+  It measures how much the two ML models (Random Forest and Gradient
+  Boosting) AGREE with each other after independently predicting the
+  yield from the same 7 input features.
+
+  Formula:
+    Confidence = max(0.50,  1.0 - (|RF_pred - GB_pred| / 10))
+
+  Variables:
+    RF_pred   = Oil yield predicted by the Random Forest model (%)
+    GB_pred   = Oil yield predicted by the Gradient Boosting model (%)
+    |diff|    = Absolute disagreement between the two models
+    0.50      = Minimum confidence floor — never drops below 50%
+    /10       = Scaling factor: a 10% disagreement = 0% confidence above floor
+
+  Worked examples:
+
+    Scan      RF_pred   GB_pred   |diff|   Confidence
+    ────────────────────────────────────────────────────────
+    Green     45.10%    45.55%    0.45     max(0.50, 1.0 - 0.045) = 95.5%
+    Yellow    59.50%    59.90%    0.40     max(0.50, 1.0 - 0.040) = 96.0%
+    Brown     58.10%    58.65%    0.55     max(0.50, 1.0 - 0.055) = 94.5%
+    Low agree 53.00%    58.00%    5.00     max(0.50, 1.0 - 0.500) = 50.0%
+
+  Interpretation:
+    Models agree within ~1%  → confidence ~90–99%  → reliable result
+    Models disagree by 5%    → confidence = 50.0%  → ambiguous fruit
+    The final displayed oil yield = (RF_pred + GB_pred) / 2
+
+
+────────────────────────────────────────────────────
+ RESEARCH REFERENCES
+ (Studies supporting the 45%–65% Oil Yield Range)
+────────────────────────────────────────────────────
+
+  1. Nguy et al. (2022)
+     Effect of some cultivation factors and extraction methods on
+     Terminalia catappa L. seed oil
+     International Journal of Food Science
+     https://doi.org/10.1155/2022/1356092
+
+  2. Akolade et al. (2024)
+     Characterization of oils and defatted residues of Terminalia catappa L.
+     seed kernels of two varieties
+     International Journal of Food Properties
+     https://doi.org/10.1080/10942912.2024.2426666
+     (reports 48.6%–55.3% depending on cultivar variety)
+
+  3. Hosseini Bai et al. (2025)
+     Variations in physical and chemical characteristics of
+     Terminalia catappa nuts
+     Horticulturae, MDPI
+     https://www.mdpi.com/2311-7524/11/5/540
+
+  4. Agu et al. (2022)
+     Modeling of methyl ester yield from Terminalia catappa L. kernel oil
+     by artificial neural network and response surface methodology
+     Cleaner Engineering and Technology
+     https://www.sciencedirect.com/science/article/pii/S2666790821003207
+     (reports ~60.3% oil yield at peak optimization — supports Yellow upper range)
+
+  5. Alingal & Gibertas (2023)
+     Extraction, chemical analysis, and smoke point determination of
+     Terminalia catappa Linn seed oil
+     8ISC Proceedings: Allied Health  (Philippine study)
+     https://ejournal.unklab.ac.id/index.php/8ISCAH/article/view/615
+     (reports 53.4% — within the range, from Philippine samples)
+
+  6. DOST Region III (2025)
+     The feasibility of using Talisay seed as diesel extender
+     Philippine Government Study
+     https://region3.dost.gov.ph/the-feasibility-of-using-talisay-seed-as-diesel-extender/
+
+================================================================================
+   END OF DOCUMENT
+   TalisayAI — Group 10, BSIT-S-3A, TUP Taguig
+================================================================================

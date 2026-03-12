@@ -16,7 +16,9 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification"]
+        "UIBackgroundModes": [
+          "remote-notification"
+        ]
       }
     },
     "android": {
@@ -58,8 +60,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "5364e601-0535-4edb-8c43-323a168b9d85"
+        "projectId": "71e029b6-67e0-456b-8b26-cbbe71bb3de3"
       }
-    }
+    },
+    "owner": "jozpogi"
   }
 }
