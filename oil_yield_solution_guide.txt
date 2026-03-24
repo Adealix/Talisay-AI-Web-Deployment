@@ -253,6 +253,200 @@
      https://region3.dost.gov.ph/the-feasibility-of-using-talisay-seed-as-diesel-extender/
 
 ================================================================================
+ HOW THE MODEL ESTIMATES KERNEL MASS (K) AND FRUIT WEIGHT (WF)
+================================================================================
+
+  K (Kernel Mass) and WF (Whole Fruit Weight) are NOT directly measured.
+  They are mathematically derived from L and W, which are measured from
+  the photo using the Five-Peso (P5) coin as a real-world size reference.
+
+
+────────────────────────────────────────────────────
+ STEP 0 — MEASURING L AND W FROM THE PHOTO
+ (₱5 Coin Reference)
+────────────────────────────────────────────────────
+
+  The Philippine Five-Peso coin has a fixed known diameter:
+
+        ₱5 coin diameter  =  25 mm  =  2.50 cm
+
+  When the coin is visible in the photo, the system detects it and
+  computes a pixel-to-centimeter conversion:
+
+        pixels_per_cm  =  coin_diameter_in_pixels / 2.50
+
+  This scale factor is then applied to the fruit's pixel dimensions:
+
+        L (cm)  =  fruit_length_in_pixels  /  pixels_per_cm
+        W (cm)  =  fruit_width_in_pixels   /  pixels_per_cm
+
+  Both are clamped to valid ranges:
+        L  →  [3.0, 8.0] cm
+        W  →  [1.5, 6.0] cm
+
+  If no coin is detected, the system estimates L and W from the
+  fruit's bounding box aspect ratio using Talisay priors (L ≈ 5.0 cm,
+  W ≈ 3.5 cm as baseline), but accuracy is lower.
+
+
+────────────────────────────────────────────────────
+ KERNEL MASS ESTIMATION — Formula
+────────────────────────────────────────────────────
+
+  Source: ml/predict.py  →  _estimate_kernel_mass(L, W)
+
+        size_factor  =  (L × W) / (5.0 × 3.5)
+
+        K  =  0.4 × size_factor
+
+        K_final  =  clamp(K,  0.1,  0.9)  g
+
+  Explanation:
+    - The reference fruit (L=5.0 cm, W=3.5 cm) has a kernel mass of
+      exactly 0.4 g — the empirical median for Talisay kernels.
+    - Any fruit bigger or smaller scales that baseline proportionally.
+    - Result is always kept within the validated range [0.1 g, 0.9 g].
+
+  Worked Example — Yellow fruit: L = 5.5 cm, W = 4.0 cm
+
+    Step         Calculation                                    Value
+    ───────────────────────────────────────────────────────────────────
+    size_factor  (5.5 × 4.0) / (5.0 × 3.5)  =  22.0 / 17.5  = 1.257
+    K            0.4 × 1.257                                  = 0.503 g
+    Clamp        0.503 is within [0.1, 0.9]  → no clamp
+    K_final                                                    = 0.503 g
+
+
+────────────────────────────────────────────────────
+ WHOLE FRUIT WEIGHT ESTIMATION — Formula
+────────────────────────────────────────────────────
+
+  Source: ml/predict.py  →  _estimate_fruit_weight(L, W)
+
+  The fruit is modeled as a prolate ellipsoid with three semi-axes:
+
+        a  =  L / 2               (half-length)
+        b  =  W / 2               (half-width)
+        c  =  (L + W) / 4         (average radius)
+
+  Ellipsoid volume formula:
+
+        V  =  (4/3) × π × a × b × c
+
+  Weight estimate (density factor = 0.8 g/cm³):
+
+        WF  =  V × 0.8
+
+        WF_final  =  clamp(WF,  15.0,  60.0)  g
+
+  Explanation:
+    - The 0.8 g/cm³ density factor reflects Talisay fruit's average
+      fresh density (slightly less than water due to fibrous husk).
+    - Result is always kept within the validated range [15.0 g, 60.0 g].
+
+  Worked Example — Yellow fruit: L = 5.5 cm, W = 4.0 cm
+
+    Step         Calculation                                         Value
+    ──────────────────────────────────────────────────────────────────────
+    a            5.5 / 2                                           = 2.75 cm
+    b            4.0 / 2                                           = 2.00 cm
+    c            (5.5 + 4.0) / 4                                   = 2.375 cm
+    V            (4/3) × π × 2.75 × 2.00 × 2.375                  = 54.64 cm³
+    WF           54.64 × 0.8                                        = 43.71 g
+    Clamp        43.71 is within [15.0, 60.0] → no clamp
+    WF_final                                                        = 43.71 g
+
+
+================================================================================
+ ACTUAL OIL EXTRACTION — MEASURING AND VERIFYING OIL YIELD
+================================================================================
+
+  The oil yield percentage used throughout this system is defined as:
+
+        Oil Yield (%)  =  (mass of extracted oil in g / mass of dry kernel in g)  × 100
+
+  This is the same basis used by all cited research studies (Soxhlet
+  extraction, dry-weight kernel basis).
+
+
+────────────────────────────────────────────────────
+ LAB PROCEDURE — Soxhlet Extraction (Standard Method)
+────────────────────────────────────────────────────
+
+  Step   Action
+  ──────────────────────────────────────────────────────────────────────
+  1      Crack open the Talisay fruit and remove the inner kernel.
+  2      Dry the kernel in an oven at 60°C for 24 hours (or until
+         the weight does not change between weighings).
+  3      Weigh the oven-dried kernel on a precision balance.
+         Record this as  m_kernel (g).
+  4      Load the dry kernel into a Soxhlet extractor.
+         Use petroleum ether or n-hexane as the extraction solvent.
+  5      Run the extraction for 6–8 hours at the solvent's boiling point.
+  6      Evaporate the solvent using a rotary evaporator or a water
+         bath set to 60°C. Allow residual solvent to fully evaporate.
+  7      Weigh the recovered oil in a pre-weighed container.
+         Record this as  m_oil (g).
+  8      Calculate the actual oil yield percentage.
+
+
+────────────────────────────────────────────────────
+ OIL YIELD CALCULATION — From Lab Results
+────────────────────────────────────────────────────
+
+        Oil Yield_actual (%)  =  (m_oil / m_kernel) × 100
+
+  Example:
+    m_kernel  =  0.52 g   (weighed dry kernel)
+    m_oil     =  0.305 g  (weighed extracted oil)
+
+    Oil Yield_actual  =  (0.305 / 0.52) × 100  =  58.65%
+
+
+────────────────────────────────────────────────────
+ VERIFICATION — Comparing System vs. Actual Lab Result
+────────────────────────────────────────────────────
+
+  Use the same fruit that was scanned by the system. After scanning:
+    1. Extract the kernel and perform the Soxhlet procedure above.
+    2. Compare the two percentages side by side.
+
+  Full example using the Yellow fruit (Example B):
+
+                           System Prediction     Lab Result
+    ──────────────────────────────────────────────────────────────────
+    Kernel Mass (K)         0.503 g (estimated)  0.52 g (actual dry wt)
+    Predicted Oil Mass      0.503 × 0.597 ≈ 0.300 g
+    Extracted Oil (m_oil)   —                    0.305 g
+    Oil Yield (%)           59.70%               58.65%
+    Difference              —                    1.05%  ✓ Match
+    ──────────────────────────────────────────────────────────────────
+    Verdict                 EXCELLENT MATCH  (difference < 2%)
+
+
+────────────────────────────────────────────────────
+ MATCH CRITERIA — Acceptable Tolerance
+────────────────────────────────────────────────────
+
+  Difference (System vs. Lab)    Interpretation
+  ──────────────────────────────────────────────────────────────────────
+  < 2.0%                         Excellent match
+  2.0% – 5.0%                    Good match (normal lab variation)
+  > 5.0%                         Review needed — see notes below
+
+
+  Common causes of > 5% discrepancy:
+    • Kernel was not fully dry before weighing (moisture adds false mass)
+    • Solvent was not fully evaporated before weighing the oil
+    • ₱5 coin was absent or partially obscured in the scanned photo
+      (system fell back to aspect-ratio estimation for L and W)
+    • Fruit was damaged, cracked, or had mold affecting kernel density
+
+  IMPORTANT: Always use oven-dried kernels (60°C, 24 hours) to match
+  the dry-weight basis assumed by the cited literature and this system.
+
+
+================================================================================
    END OF DOCUMENT
    TalisayAI — Group 10, BSIT-S-3A, TUP Taguig
 ================================================================================

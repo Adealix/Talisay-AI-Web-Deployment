@@ -1,0 +1,1395 @@
+===============================================================================
+                        TALISAY AI SYSTEM - USER MANUAL
+                      Complete Step-by-Step User Guide
+===============================================================================
+
+Version: 1.0.0
+Last Updated: March 2026
+Prepared for: Academic Submission
+
+===============================================================================
+PART 1: USER ACCOUNT SETUP & LOGIN
+===============================================================================
+
+STEP 1: ACCESS THE TALISAY AI SYSTEM
+─────────────────────────────────────────────────────────────────────────────
+1. Open your web browser or Expo Go mobile app
+2. Navigate to the TalisayAI application
+3. You will see the HOME PAGE with a professional header at the top
+4. In the top-right corner of the header, you will see a "Login" button
+5. Click on the "Login" button to proceed
+
+STEP 2: REGISTRATION (NEW USER)
+─────────────────────────────────────────────────────────────────────────────
+Since you do not have an account yet, follow these steps:
+
+1. On the Login page, look for a "Don't have an account? Register" link
+2. Click on the "Register" link or "Sign Up" button
+3. You will be directed to the Registration form
+
+REGISTRATION FORM FIELDS:
+─────────────────────────────────────────────────────────────────────────────
+   ☐ First Name: Enter your first name
+   ☐ Last Name: Enter your last name
+   ☐ Email Address: Enter a valid email address (this will be your login ID)
+   ☐ Phone Number: Enter your contact number (for notifications)
+   ☐ Password: Create a strong password (minimum 8 characters recommended)
+   ☐ Confirm Password: Re-enter your password to confirm
+   ☐ Address (Optional): Enter your location for profile completeness
+
+4. Read and agree to the Terms of Service checkbox
+5. Click the "Register" button
+6. Check your email for a verification link
+7. Click the verification link to confirm your email address
+8. Your account is now active and ready to use!
+
+STEP 3: LOGIN TO YOUR ACCOUNT
+─────────────────────────────────────────────────────────────────────────────
+1. Return to the Login page
+2. Enter your Email address
+3. Enter your Password
+4. Click the "Login" button
+5. You will be redirected to the PROFILE PAGE
+
+STEP 4: OPTIONAL - RESET FORGOTTEN PASSWORD
+─────────────────────────────────────────────────────────────────────────────
+1. On the Login page, click "Forgot Password?"
+2. Enter your registered email address
+3. Click "Send Reset Link"
+4. Check your email for a password reset link
+5. Click the link and create a new password
+6. You can now login with your new password
+
+===============================================================================
+PART 2: HOME PAGE TOUR
+===============================================================================
+
+After logging in successfully, you will see the HOME PAGE featuring:
+
+SECTION A: HERO CAROUSEL
+─────────────────────────────────────────────────────────────────────────────
+• Visual slideshow showcasing Talisay fruit and oil products
+• Automatically cycles through images every 4 seconds
+• Manually click "Previous/Next" arrows to browse at your own pace
+• Displays beautiful photography and information about Talisay trees
+
+SECTION B: QUICK STATISTICS
+─────────────────────────────────────────────────────────────────────────────
+The system displays 4 key statistics about Talisay:
+   1. Kernel Oil Yield: 38-65% (scientific range)
+   2. Curated Studies: 15 research papers
+   3. Countries Studied: 6+ nations
+   4. Maturity Stages: 3 color categories
+
+SECTION C: FEATURED FEATURES SECTION
+─────────────────────────────────────────────────────────────────────────────
+Three main feature cards are displayed:
+
+  1. AI FRUIT SCANNER
+     • Advanced machine learning for fruit analysis
+     • Upload fruit images for instant analysis
+     • Get maturity stage and oil yield predictions
+     
+  2. GROWTH ANALYTICS
+     • Track seasonal patterns
+     • Monitor population data
+     • View environmental factors
+     
+  3. RESEARCH LIBRARY
+     • Access 15+ curated publications
+     • View local and international studies
+     • Learn about Talisay science
+
+SECTION D: QUICK LINKS NAVIGATION BAR
+─────────────────────────────────────────────────────────────────────────────
+At the bottom of the home page, you will find 8 quick-access buttons:
+
+   🔍 SCAN FRUIT     → Go to AI Scanning page
+   ⏱️ HISTORY        → View your analysis history
+   📍 MAPPING        → View Talisay tree locations on map
+   💬 TALISAI CHAT   → Chat with AI assistant
+   🌿 ABOUT TALISAY  → Learn about the fruit
+   📄 PUBLICATIONS   → Read research papers
+   📊 ANALYTICS      → View system statistics
+   👥 ABOUT US       → Meet the development team
+
+===============================================================================
+PART 3: CORE FEATURE #1 - SCANNING TALISAY FRUITS
+===============================================================================
+
+STEP 1: ACCESS THE SCAN PAGE
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "SCAN FRUIT" button from home page, OR
+2. Use the navigation menu (hamburger icon) and select "Scan"
+3. You will see the Scan Page with two main options
+
+STEP 2: UPLOAD AN IMAGE
+─────────────────────────────────────────────────────────────────────────────
+The Scan page offers two analysis modes:
+
+MODE A: SINGLE FRUIT ANALYSIS (Recommended for beginners)
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "Upload Image" button
+2. Choose an image source:
+   • Camera: Take a fresh photo of a Talisay fruit
+   • Photo Library: Select an existing image of a Talisay fruit
+   
+3. You will see the selected image displayed
+4. For better accuracy, include a Philippine ₱5 coin in the photo
+   (This helps the AI calibrate fruit size measurements)
+5. Click "Analyze Image" button
+
+STEP 3: VIEW ANALYSIS RESULTS - SINGLE FRUIT
+─────────────────────────────────────────────────────────────────────────────
+After analyzing, you will receive a detailed report:
+
+FRUIT MATURITY & COLOR:
+   • Color Category: GREEN / YELLOW / BROWN
+   • Maturity Stage: Immature / Semi-ripe (Optimal) / Fully Ripe
+   • Color Confidence: Percentage accuracy of classification
+
+OIL YIELD PREDICTION:
+   • Predicted Oil Yield: Percentage (38-65% range)
+   • Minimum Oil Extract: mL estimate for conservative extraction
+   • Recommendation: When to harvest for maximum oil
+
+FRUIT DIMENSIONS:
+   • Length: cm measurement
+   • Width: cm measurement
+   • Estimated Weight: grams
+
+AI ANALYSIS DETAILS:
+   • Detection Confidence: How confident the AI was
+   • Analysis Method: Which ML models were used
+   • Processing Time: How long the analysis took
+
+STEP 4: SAVE TO HISTORY
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Save Analysis" button
+2. Enter optional notes about the sample
+3. Click "Confirm Save"
+4. The result is saved to your History for future reference
+
+MODE B: MULTI-FRUIT ANALYSIS (For multiple fruits in one image)
+─────────────────────────────────────────────────────────────────────────────
+1. Select "Multiple Fruit Mode" or "Batch Analysis"
+2. Click "Upload Image" 
+3. Take/select a photo showing multiple Talisay fruits together
+4. Click "Analyze Multiple Fruits"
+
+RESULTS FOR MULTI-FRUIT:
+   • Number of fruits detected: Count
+   • Per-fruit analysis: Individual color & yield for each fruit
+   • Color Distribution: Chart showing green/yellow/brown counts
+   • Average Oil Yield: Combined estimate for all fruits
+   • Total Batch Estimate: Total mL of oil for the whole batch
+
+===============================================================================
+PART 4: CORE FEATURE #2 - SCAN HISTORY
+===============================================================================
+
+STEP 1: ACCESS HISTORY
+─────────────────────────────────────────────────────────────────────────────
+1. Click "HISTORY" from home page, OR
+2. Use navigation menu and select "History"
+3. You will see a list of all your previous scans
+
+STEP 2: BROWSE YOUR HISTORY
+─────────────────────────────────────────────────────────────────────────────
+Each history card displays:
+   • Thumbnail image of the fruit
+   • Date & time of scan
+   • Fruit color category
+   • Oil yield percentage
+   • Brief analysis snippet
+
+STEP 3: VIEW DETAILED ANALYSIS
+─────────────────────────────────────────────────────────────────────────────
+1. Click on any history card
+2. A detailed modal/popup will appear showing:
+   • Full analysis image (original photo you uploaded)
+   • Complete maturity stage information
+   • Oil yield prediction with confidence
+   • Fruit dimensions (length, width, weight)
+   • Sample notes you added
+   • Timestamp of analysis
+
+STEP 4: FILTER AND ORGANIZE
+─────────────────────────────────────────────────────────────────────────────
+Use the filter options at the top to:
+   • Filter by Color: GREEN / YELLOW / BROWN / ALL
+   • Sort by: Most Recent / Highest Oil Yield / Lowest Oil Yield
+   • Date Range: This Week / This Month / All Time
+   • Search: Enter date or notes keywords
+
+STEP 5: DELETE OR EXPORT
+─────────────────────────────────────────────────────────────────────────────
+1. Swipe or long-press on a history card
+2. Options appear:
+   ☐ View Details - See full information
+   ☐ Edit Notes - Add or modify your notes
+   ☐ Export PDF - Download analysis as PDF report
+   ☐ Delete - Remove from history (careful: cannot undo)
+
+===============================================================================
+PART 5: TALISAY INFORMATION PAGES
+===============================================================================
+
+PAGE A: ABOUT TALISAY (Learn about the fruit)
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "ABOUT TALISAY" from home page or navigation menu
+
+This page contains:
+
+SECTION 1: FRUIT MATURITY GUIDE
+─────────────────────────────────────────────────────────────────────────────
+Detailed information about three maturity stages:
+
+1. GREEN (Immature)
+   • Appearance: Bright green color
+   • Oil Content: 45-49% (lowest)
+   • Best Use: Wait for maturity
+   • Characteristics: Firm texture, bitter taste, not ready for oil extraction
+   • Timeline: First 4-6 weeks of fruit development
+   • Photo Carousel: Shows actual green fruits from research data
+
+2. YELLOW (Mature / OPTIMAL FOR HARVESTING)
+   • Appearance: Golden yellow color with slight browning
+   • Oil Content: 57-60% (HIGHEST - BEST FOR OIL)
+   • Best Use: HARVEST NOW for maximum oil yield
+   • Characteristics: Soft texture, sweet aroma, peak oil content
+   • Timeline: Weeks 8-10 of fruit development
+   • Photo Carousel: Shows actual yellow fruits ready for harvest
+   • Recommendation: This is the perfect harvest window
+
+3. BROWN (Overripe)
+   • Appearance: Dark brown color
+   • Oil Content: 54-57% (still good, but lower than yellow)
+   • Best Use: Can still extract oil, but lost some quality
+   • Characteristics: Very soft, seeds are fully mature
+   • Timeline: Weeks 11+ of fruit development
+   • Photo Carousel: Shows actual brown fruits
+   • Note: Harvest should have happened in yellow stage
+
+SECTION 2: FRUIT CHARACTERISTICS
+─────────────────────────────────────────────────────────────────────────────
+• Scientific Name: Terminalia catappa
+• Common Names: Talisay, Almond Tree, Tropical Almond
+• Origin: Native to tropical regions
+• Average Fruit Size: 5-8 cm length
+• Seed Weight Range: 0.1-0.9 grams
+• Harvesting Season: April-June in Philippines
+
+SECTION 3: OIL EXTRACTION PROCESS
+─────────────────────────────────────────────────────────────────────────────
+Visual diagram and steps showing:
+1. Fruit Selection (Yellow stage preferred)
+2. Seed Extraction
+3. Drying Process
+4. Oil Pressing
+5. Refinement (optional)
+6. Final Product: Pure Talisay oil
+
+SECTION 4: RESEARCH & SCIENTIFIC DATA
+─────────────────────────────────────────────────────────────────────────────
+• Oil composition data
+• Fatty acid profiles
+• Nutritional values
+• Traditional uses
+• Modern applications
+
+PAGE B: PUBLICATIONS (Research papers)
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "PUBLICATIONS" from home page or navigation
+
+This page shows:
+• 15 curated research papers
+• Filter by Category: Local Studies / International Studies / All
+• View Abstract: Click paper to see summary
+• Access Source: Links to full research papers
+• Citation Information: How to cite each paper
+
+PAGE C: ABOUT US (Team & Organization)
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "ABOUT US" from home page or navigation
+
+This page displays:
+• Team member profiles with photos
+• Their roles in the project
+• Development organization (TUP)
+• Project objectives
+• Contact information
+• Social media links
+
+===============================================================================
+PART 6: INTERACTIVE FEATURES
+===============================================================================
+
+FEATURE A: TALISAY MAPPING PAGE
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "MAPPING" from home page or navigation menu
+
+WHAT YOU CAN DO:
+1. View interactive map of the Philippines
+2. Red circular pins show Talisay tree locations
+3. Pin size indicates tree population density:
+   • Large pins: Abundant population (🌳)
+   • Medium pins: Moderate population (🌿)
+   • Small pins: Sparse population (🌱)
+
+4. Click on any pin to see:
+   • Location name
+   • Province and region
+   • Population density
+   • Additional notes about the location
+
+5. Use Search feature:
+   • Type a province name
+   • Filter locations by region
+   • Zoom to specific areas
+
+HEAT MAP VIEW:
+• Shows concentration of Talisay trees
+• Warmer colors (red) = higher concentration
+• Cooler colors (blue) = lower concentration
+
+FEATURE B: AI CHATBOT (TalisAI Chat)
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "TALISAI CHAT" from home page or navigation menu
+
+WHAT THE CHATBOT CAN DO:
+The AI chatbot is powered by Google Gemini and can answer questions about:
+• Talisay tree care and growth
+• Oil extraction methods
+• Fruit maturity identification
+• Nutritional information
+• Historical uses
+• Scientific research
+• Growing conditions
+• And much more!
+
+HOW TO USE:
+1. You will see suggested questions displayed
+2. Click any suggested question to ask it, OR
+3. Type your own custom question in the input box
+4. Click "Send" or press Enter
+5. Wait for the AI to generate a response (takes 2-5 seconds)
+6. Read the answer formatted with proper paragraphs
+7. Ask follow-up questions in the same conversation
+8. Chat history is saved for your reference
+
+SUGGESTED PROMPTS (Examples):
+   • What is a Talisay tree?
+   • How is oil extracted from Talisay kernels?
+   • What do the fruit colors mean?
+   • What is the oil yield range?
+   • Where are Talisay trees found in the Philippines?
+   • How does the AI analyze fruit images?
+
+FEATURE C: COMMUNITY FORUM
+─────────────────────────────────────────────────────────────────────────────
+Access: Click "Forum" from navigation menu
+
+WHAT YOU CAN DO:
+1. Browse discussion topics posted by other users
+2. Read comments and replies on topics
+3. Like or react to posts and comments
+4. Create a new discussion topic:
+   • Click "New Topic" button
+   • Write a title
+   • Write your message
+   • (Optional) Attach an image or link
+   • Click "Post"
+
+5. Reply to existing topics:
+   • Click on a topic to open it
+   • Scroll to reply box at bottom
+   • Type your response
+   • (Optional) Mention other users by typing "@username"
+   • Click "Post Reply"
+
+MODERATION:
+   • Inappropriate language is automatically filtered
+   • Report inappropriate posts to moderators
+   • Community guidelines enforced
+
+===============================================================================
+PART 7: ACCOUNT MANAGEMENT
+===============================================================================
+
+STEP 1: ACCESS YOUR PROFILE
+─────────────────────────────────────────────────────────────────────────────
+1. Click the profile avatar icon in the top-right corner of header, OR
+2. Click navigation menu and select "Account"
+3. You will see your Profile Page
+
+STEP 2: VIEW & EDIT PROFILE INFORMATION
+─────────────────────────────────────────────────────────────────────────────
+Your profile shows:
+   • Profile photo/avatar
+   • First Name
+   • Last Name
+   • Email address
+   • Phone number
+   • Address
+   • Account created date
+   • Your statistics:
+     - Total scans performed
+     - Average oil yield
+     - Most common fruit color
+     - Total analysis time
+
+TO EDIT YOUR PROFILE:
+1. Click "Edit Profile" button
+2. Modify any field you want to change
+3. To change profile photo:
+   • Click current photo
+   • Choose camera or photo library
+   • Select or take photo
+   • Confirm selection
+4. Click "Save Changes"
+5. Confirmation message appears: "Profile updated successfully"
+
+STEP 3: CHANGE PASSWORD
+─────────────────────────────────────────────────────────────────────────────
+1. On profile page, click "Change Password" button
+2. Enter your current password
+3. Enter your new password (must be different)
+4. Confirm new password (type it again)
+5. Click "Update Password"
+6. An email confirmation will be sent to your address
+7. Password is changed immediately
+
+STEP 4: NOTIFICATION SETTINGS
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Notification Settings"
+2. Choose which notifications to receive:
+   ☑ New analysis results ready
+   ☑ Community replies to your posts
+   ☑ System updates and news
+   ☑ Weekly research highlights
+3. Set notification frequency:
+   • Instantly / Digest (Daily) / Weekly / Never
+4. Click "Save Settings"
+
+STEP 5: LOGOUT
+─────────────────────────────────────────────────────────────────────────────
+1. On profile page, scroll to bottom
+2. Click "Logout" button
+3. You will be returned to login page
+4. Your session is ended securely
+
+===============================================================================
+PART 8: ADDITIONAL FEATURES
+===============================================================================
+
+FEATURE A: NOTIFICATIONS PAGE
+─────────────────────────────────────────────────────────────────────────────
+Access: Click bell icon in header or "Notifications" in menu
+
+Shows:
+• Analysis results alerts
+• Forum replies and mentions
+• System announcements
+• New publications posted
+• Mark as read / unread
+• Delete notifications
+• Push notifications to mobile device
+
+FEATURE B: THEME TOGGLE (Dark / Light Mode)
+─────────────────────────────────────────────────────────────────────────────
+Location: Top-right corner of header
+
+Benefits:
+• Light Mode: Bright interface, easier for daytime use
+• Dark Mode: Easy on eyes, saves battery on mobile
+• Setting is saved to your account
+• Changes apply immediately across entire app
+
+FEATURE C: EXPORT & REPORTING
+─────────────────────────────────────────────────────────────────────────────
+From History page:
+1. Select scans you want to export
+2. Click "Export" button
+3. Choose export format:
+   • PDF Report: Professional formatted document
+   • CSV File: For data analysis in Excel
+   • JSON: For technical integration
+
+4. Download file to your computer
+5. File is ready to share or analyze
+
+===============================================================================
+PART 9: TIPS & BEST PRACTICES FOR USER
+===============================================================================
+
+FOR BEST SCANNING RESULTS:
+──────────────────────────────────────────────────────────────────────────────
+1. Use good lighting - natural daylight is best
+2. Include a ₱5 coin reference in the photo (for size calibration)
+3. Make sure the fruit fills most of the frame
+4. Avoid shadows on the fruit surface
+5. Take multiple angles if possible
+
+FOR ACCURATE ANALYSIS:
+──────────────────────────────────────────────────────────────────────────────
+1. Use clear, high-resolution images
+2. Capture the whole fruit with all colors visible
+3. Don't include other fruits if using single-fruit mode
+4. Clean the phone camera lens before taking photos
+5. Avoid blurry or out-of-focus images
+
+OPTIMIZE YOUR EXPERIENCE:
+──────────────────────────────────────────────────────────────────────────────
+1. Save your analysis results for future comparison
+2. Add notes to each scan for personal reference
+3. Use the history filters to find specific analyses
+4. Check "About Talisay" page to understand fruit stages better
+5. Ask the chatbot if you have questions during scanning
+6. Participate in forum to learn from other users
+
+===============================================================================
+PART 10: TROUBLESHOOTING
+===============================================================================
+
+PROBLEM: Cannot log in with correct password
+SOLUTION:
+1. Check if caps lock is on (passwords are case-sensitive)
+2. Try the "Forgot Password" option to reset
+3. Ensure you're using the correct email address
+4. Clear browser cache and try again
+
+PROBLEM: Image upload fails or takes too long
+SOLUTION:
+1. Check your internet connection
+2. Try a different image file
+3. Compress the image size if it's very large (over 5MB)
+4. Try uploading from camera instead of photo library
+5. Check device storage - ensure enough space available
+
+PROBLEM: Analysis results seem inaccurate
+SOLUTION:
+1. Try with a clearer image
+2. Include a ₱5 coin reference in the photo
+3. Ensure fruit is properly lit without shadows
+4. Make sure it's actually a Talisay fruit
+5. Try analyzing from different angle
+
+PROBLEM: Cannot access certain features
+SOLUTION:
+1. Make sure you're logged in with valid account
+2. Check if your account has admin rights (for admin features)
+3. Refresh the page or restart the app
+4. Try on a different browser or device
+5. Contact system support if problem persists
+
+===============================================================================
+
+                              END OF USER MANUAL
+
+           Thank you for using Talisay AI! Happy analyzing!
+
+===============================================================================
+
+
+===============================================================================
+                       TALISAY AI SYSTEM - ADMIN MANUAL
+                    Complete Step-by-Step Admin Guide
+===============================================================================
+
+===============================================================================
+PART 1: ADMIN LOGIN
+===============================================================================
+
+STEP 1: ADMIN ACCOUNT LOGIN
+─────────────────────────────────────────────────────────────────────────────
+1. Go to the system login page
+2. Enter ADMIN email address:
+   Example: admin@talisayai.ph or admin@university.edu
+3. Enter your admin password (provided by system administrator)
+4. Click "Login" button
+5. You will be directed to the ADMIN DASHBOARD
+
+NOTE: 
+Regular users cannot access admin features even if they guess the URL.
+Only accounts with admin role can view admin dashboard.
+
+===============================================================================
+PART 2: ADMIN DASHBOARD OVERVIEW
+===============================================================================
+
+After logging in, you will see the Admin Dashboard with multiple sections:
+
+DASHBOARD HEADER
+─────────────────────────────────────────────────────────────────────────────
+• User role: "Administrator"
+• Quick logout button (top-right)
+• Dark/Light theme toggle
+• Notifications indicator
+
+MAIN NAVIGATION TABS
+─────────────────────────────────────────────────────────────────────────────
+The dashboard typically has these tabs:
+
+1. OVERVIEW - Key statistics and system status
+2. USERS - Manage user accounts
+3. ANALYTICS - View detailed analysis data
+4. REPORTS - Generate reports
+5. SYSTEM - System configuration and logs
+
+===============================================================================
+PART 3: OVERVIEW SECTION
+===============================================================================
+
+STATISTICS CARDS
+─────────────────────────────────────────────────────────────────────────────
+The Overview tab shows real-time key metrics:
+
+CARD 1: TOTAL USERS
+   • Number: Total registered users in system
+   • Trend: Up/Down indicator
+   • Last Updated: Timestamp
+
+CARD 2: TOTAL SCANS
+   • Number: Total fruit analyses performed
+   • Breakdown: Single fruit vs. multi-fruit
+   • 7-day trend graph
+
+CARD 3: AVERAGE OIL YIELD
+   • Percentage: System-wide average oil yield
+   • By Color: GREEN avg / YELLOW avg / BROWN avg
+   • Trending data
+
+CARD 4: ACTIVE USERS (Last 24 Hours)
+   • Number: Users online/active in past 24 hours
+   • Engagement rate: % of total users
+   • Last activity timestamp
+
+ADDITIONAL DATA:
+─────────────────────────────────────────────────────────────────────────────
+• System uptime percentage
+• Total server requests
+• API response time
+• Database status
+• Backup status indicator
+
+CHARTS AND GRAPHS
+─────────────────────────────────────────────────────────────────────────────
+Visual representations showing:
+• Analysis trends over time (7 days, 30 days, 90 days)
+• User growth trajectory
+• Most common fruit colors analyzed
+• Peak usage hours
+• Geographic distribution of users
+
+===============================================================================
+PART 4: USERS MANAGEMENT
+===============================================================================
+
+STEP 1: ACCESS USERS SECTION
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "USERS" tab in admin dashboard navigation
+2. You will see a list of all registered users
+
+STEP 2: VIEW USER LIST
+─────────────────────────────────────────────────────────────────────────────
+Each user entry shows:
+   • User ID
+   • Full Name
+   • Email Address
+   • Phone Number
+   • Account Status: Active / Inactive / Suspended
+   • Total Scans: Number of analyses performed
+   • Join Date: When account was created
+   • Last Login: Most recent login timestamp
+   • Role: User / Admin / Moderator
+
+STEP 3: SEARCH & FILTER USERS
+─────────────────────────────────────────────────────────────────────────────
+Use filter options at the top:
+
+1. Search by:
+   • Email address
+   • Name
+   • Phone number
+   • User ID
+
+2. Filter by:
+   ☐ Status: Active / Inactive / All
+   ☐ Role: User / Admin / All
+   ☐ Join Date: Last 7 days / 30 days / 90 days / All
+   ☐ Scans: Users with no scans / 1-10 scans / 10+ scans / All
+
+3. Sort by:
+   • Most recent joined
+   • Most scans
+   • Most active
+   • A-Z by name
+
+STEP 4: VIEW INDIVIDUAL USER DETAILS
+─────────────────────────────────────────────────────────────────────────────
+1. Click on any user in the list
+2. A detailed user profile modal opens showing:
+
+USER INFORMATION:
+   • Full name and contact details
+   • Email address
+   • Phone number
+   • Address & location
+   • Avatar/profile photo
+   • Account creation date
+   • Last login date and time
+
+ACCOUNT STATISTICS:
+   • Total scans performed
+   • Average oil yield of their scans
+   • Most analyzed fruit color
+   • Total analysis hours spent
+   • Forum posts count
+   • Community engagement score
+
+ANALYSIS HISTORY:
+   • List of last 10 scans by this user
+   • Date/time of each scan
+   • Fruit color analyzed
+   • Oil yield result
+   • Quick preview of analyzed image
+
+STEP 5: MANAGE USER ACCOUNT
+─────────────────────────────────────────────────────────────────────────────
+Within user details modal, admin has options:
+
+OPTION A: CHANGE USER ROLE
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Change Role" button
+2. Select new role:
+   • User: Standard user (default)
+   • Moderator: Can moderate forum posts
+   • Admin: Full administrative access
+
+3. Click "Confirm"
+4. User notification: Email sent to user about role change
+
+OPTION B: DEACTIVATE / REACTIVATE ACCOUNT
+─────────────────────────────────────────────────────────────────────────────
+1. If account is Active: 
+   • Click "Deactivate Account"
+   • Reason dropdown: Inactivity / Violation / Request / Other
+   • Optional message to user
+   • Click "Confirm Deactivate"
+   
+2. If account is Inactive:
+   • Click "Reactivate Account"
+   • User receives notification
+   • Account is immediately accessible
+
+OPTION C: SUSPEND / UNSUSPEND ACCOUNT
+─────────────────────────────────────────────────────────────────────────────
+Warning: Use for policy violations only
+
+1. Click "Suspend Account"
+2. Select reason:
+   • Inappropriate forum content
+   • Spam activity
+   • Terms violation
+   • Abuse report
+   • Investigation needed
+   
+3. Select suspension duration:
+   • 24 hours
+   • 7 days
+   • 30 days
+   • Permanent (until admin review)
+
+4. Write admin notes for reason
+5. Click "Confirm Suspension"
+6. User notification: Email sent explaining suspension
+
+OPTION D: VIEW USER'S ANALYSIS HISTORY
+─────────────────────────────────────────────────────────────────────────────
+1. Click "View Full History" button
+2. Detailed analysis list appears showing:
+   • All scans performed by user (not just last 10)
+   • Date and time of each analysis
+   • Fruit color and oil yield
+   • Images analyzed
+   • User's notes on each scan
+   • Export options
+
+3. Admin can:
+   • Download all user's data
+   • View individual analysis details
+   • Export user history as PDF/CSV
+
+OPTION E: DELETE USER ACCOUNT
+─────────────────────────────────────────────────────────────────────────────
+Warning: This is permanent and cannot be undone
+
+1. Click "Delete Account" (usually at bottom of options)
+2. System asks for confirmation: "Are you sure?"
+3. Must type user's email to confirm deletion
+4. Click "Permanently Delete"
+5. User account and all associated data is removed
+6. Admin action is logged in system
+
+===============================================================================
+PART 5: ANALYTICS SECTION
+===============================================================================
+
+STEP 1: ACCESS ANALYTICS
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "ANALYTICS" tab in admin dashboard
+2. You will see comprehensive analysis data
+
+STEP 2: FRUIT COLOR DISTRIBUTION
+─────────────────────────────────────────────────────────────────────────────
+Visual charts showing:
+
+PIE CHART:
+   • Green fruits analyzed: %
+   • Yellow fruits analyzed: %
+   • Brown fruits analyzed: %
+   • Multi-fruit scans: %
+
+BAR CHART:
+   • Absolute numbers (not just percentages)
+   • Trend over time (daily, weekly, monthly)
+   • Comparison to previous period
+
+INSIGHTS:
+• Most popular fruit maturity stage among users
+• Seasonal patterns in analysis
+• Yellow fruits should be highest (45-55% of scans) for healthy harvesting
+
+STEP 3: OIL YIELD ANALYSIS
+─────────────────────────────────────────────────────────────────────────────
+Statistical data presented:
+
+AGGREGATE STATISTICS:
+   • Average oil yield: Overall system average
+   • Minimum predicted: Lowest yield recorded
+   • Maximum predicted: Highest yield recorded
+   • Standard deviation: Variability measure
+
+OIL YIELD BY COLOR:
+   • Green: Average 47%, Range 45-49%
+   • Yellow: Average 58.5%, Range 57-60%
+   • Brown: Average 55.5%, Range 54-57%
+
+COMPARISON:
+   • Actual vs. Research data alignment check
+   • Confidence level of predictions
+   • Anomalies or outliers detected
+
+TREND ANALYSIS:
+   • Is average oil yield trending up/down?
+   • Seasonal patterns
+   • Month-by-month comparison
+
+STEP 4: USER ENGAGEMENT METRICS
+─────────────────────────────────────────────────────────────────────────────
+Data showing:
+
+ACTIVITY LEVELS:
+   • Daily active users (DAU)
+   • Monthly active users (MAU)
+   • New users this month
+   • User retention rate (% returning users)
+
+FEATURE USAGE:
+   • Scan page: % of users who use it
+   • History page: Average visits per user
+   • Chatbot usage: Number of conversations
+   • Forum participation: Posts and replies
+   • Mapping page: Visits
+
+ENGAGEMENT SCORE:
+   • Per-user engagement calculation
+   • High engagement: Users with 10+ scans
+   • Low engagement: Users with 0-2 scans
+   • Dormant accounts: No activity in 30+ days
+
+STEP 5: GEOGRAPHIC DISTRIBUTION
+─────────────────────────────────────────────────────────────────────────────
+Map showing:
+   • User locations by province
+   • Scans performed by location
+   • Heatmap of system usage
+   • Highest usage areas
+
+STEP 6: SYSTEM PERFORMANCE METRICS
+─────────────────────────────────────────────────────────────────────────────
+Technical performance data:
+
+API PERFORMANCE:
+   • Average response time: milliseconds
+   • Peak usage time: When system is busiest
+   • Error rate: Failed requests percentage
+   • Uptime: System availability %
+
+DATABASE:
+   • Total data stored: Size in GB
+   • Query performance
+   • Backup status and schedule
+   • Recent backup time
+
+INFRASTRUCTURE:
+   • Server health status
+   • CPU usage percentage
+   • Memory usage percentage
+   • Disk space available
+
+===============================================================================
+PART 6: REPORTS GENERATION
+===============================================================================
+
+STEP 1: ACCESS REPORTS SECTION
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "REPORTS" tab
+2. You will see report generation options
+
+STEP 2: GENERATE CATEGORY REPORT
+─────────────────────────────────────────────────────────────────────────────
+Creates detailed report for specific fruit color category
+
+1. Click "Generate Category Report"
+2. Select category:
+   ☐ GREEN - Immature fruits
+   ☐ YELLOW - Mature fruits
+   ☐ BROWN - Overripe fruits
+
+3. Select time period:
+   • Last 7 days
+   • Last 30 days
+   • Last 90 days
+   • Custom date range
+
+4. Click "Generate"
+5. Report includes:
+
+REPORT CONTENTS:
+   • Total scans in category
+   • Average oil yield for category
+   • User count analyzing this category
+   • Most common combinations
+   • Trend analysis
+   • Statistical summary
+
+EXPORT OPTIONS:
+   ☐ PDF - Professional formatted document
+   ☐ CSV - Excel-compatible spreadsheet
+   ☐ JSON - Data format for integration
+
+STEP 3: GENERATE OVERALL SYSTEM REPORT
+─────────────────────────────────────────────────────────────────────────────
+Comprehensive system-wide report
+
+1. Click "Generate Overall Report"
+2. Select scope:
+   • Full system stats
+   • By user role (Users / Admins / Moderators)
+   • By feature (Scans / Forum / Chatbot / Mapping)
+
+3. Select time period (see options above)
+4. Click "Generate"
+
+REPORT INCLUDES:
+   • System overview
+   • User statistics
+   • Analysis data across all categories
+   • Feature usage breakdown
+   • Error logs and warnings
+   • Recommendations for improvement
+
+STEP 4: DOWNLOAD REPORTS
+─────────────────────────────────────────────────────────────────────────────
+1. After report is generated, download options appear
+2. Click "Download as PDF" or "Download as CSV"
+3. File is saved to your Downloads folder
+4. File naming format: Report_[Category]_[Date].pdf
+5. Can share with stakeholders or administration
+
+STEP 5: SCHEDULE RECURRING REPORTS
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Schedule Report"
+2. Select report type
+3. Set frequency:
+   • Daily
+   • Weekly (choose day)
+   • Monthly (choose date)
+
+4. Enter recipient email(s)
+5. Click "Schedule"
+6. Reports automatically generated and emailed on schedule
+
+===============================================================================
+PART 7: SYSTEM MANAGEMENT
+===============================================================================
+
+STEP 1: ACCESS SYSTEM SETTINGS
+─────────────────────────────────────────────────────────────────────────────
+1. Click the "SYSTEM" tab (usually last tab)
+2. You will see system configuration options
+
+STEP 2: SYSTEM CONFIGURATION
+─────────────────────────────────────────────────────────────────────────────
+Key settings you can modify:
+
+GENERAL SETTINGS:
+   • System name
+   • System description
+   • Support contact email
+   • Terms of service text
+   • Privacy policy text
+
+USER SETTINGS:
+   • Allow new user registration: Yes/No
+   • Email verification required: Yes/No
+   • Maximum file upload size: MB
+   • Account inactivity timeout: days
+
+ANALYSIS SETTINGS:
+   • Enable fruit scanning: Yes/No
+   • Enable multi-fruit mode: Yes/No
+   • ML model version: Current version
+   • Confidence threshold: %
+   • Maximum image size: MB
+
+COMMUNITY SETTINGS:
+   • Enable forum: Yes/No
+   • Moderate posts before publishing: Yes/No
+   • Enable user avatars: Yes/No
+   • Bad words filter: On/Off
+
+STEP 3: MANAGE API KEYS
+─────────────────────────────────────────────────────────────────────────────
+1. Click "API Keys" section
+2. Current active keys listed:
+   • Key name
+   • Creation date
+   • Last used date
+   • Usage count
+
+3. To create new key:
+   • Click "Generate New Key"
+   • Enter key name
+   • Select permissions
+   • Click "Create"
+   • Copy key to clipboard (shown only once!)
+
+4. To revoke key:
+   • Find key in list
+   • Click "Revoke" or trash icon
+   • Confirm revocation
+   • Key immediately disabled
+
+STEP 4: VIEW SYSTEM LOGS
+─────────────────────────────────────────────────────────────────────────────
+1. Click "System Logs"
+2. View logs filtered by:
+   • Type: Error / Warning / Info / Debug
+   • Date range: Custom dates
+   • Source: API / Database / Server / Auth
+
+3. Each log contains:
+   • Timestamp
+   • Severity level (red=critical, yellow=warning)
+   • Message description
+   • Affected component
+
+4. Export logs:
+   • Select date range
+   • Click "Export as CSV"
+   • Useful for debugging
+
+STEP 5: BACKUP & RESTORE
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Backup & Restore"
+2. Current backups listed:
+   • Backup date/time
+   • Size (MB)
+   • Type: Full / Incremental
+   • Status: Completed / In Progress
+
+3. Create manual backup:
+   • Click "Create Backup Now"
+   • System creates complete backup
+   • Takes 2-5 minutes for large databases
+   • Status shown in real-time
+
+4. Auto-backup schedule (view/modify):
+   • Currently scheduled: Daily at 2:00 AM
+   • Can change frequency
+   • Change retention period: Keep last 7 / 30 / 90 backups
+
+5. To restore from backup:
+   • Click backup in list
+   • Click "Restore"
+   • Warning: This will overwrite current data
+   • Confirm "Yes, Restore"
+   • System begins restore process
+   • All data returned to backup point
+
+STEP 6: SECURITY
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Security"
+2. View security settings:
+
+SECURITY OPTIONS:
+   ☑ Enable two-factor authentication (2FA)
+   ☑ Enforce strong password policy
+   ☑ Session timeout (minutes): 30
+   ☑ IP whitelist: Can restrict access to specific IPs
+   ☑ HTTPS only: Force secure connections
+
+3. View admin access logs:
+   • Who logged in as admin
+   • When they logged in
+   • From which IP
+   • What actions they took
+
+4. Change admin password:
+   • Enter current password
+   • Enter new password (must be strong)
+   • Confirm new password
+   • Click "Update"
+
+STEP 7: DATABASE MANAGEMENT
+─────────────────────────────────────────────────────────────────────────────
+1. Click "Database" section
+2. View database status:
+   • Connected: Yes/No
+   • Database size: MB
+   • Free space: MB
+   • Last maintenance: Date
+   • Optimization status
+
+3. Run database maintenance:
+   • Click "Optimize Database"
+   • Removes unused data
+   • Improves query performance
+   • Takes 1-5 minutes
+
+4. View database tables:
+   • Users table: Record count
+   • Analysis table: Record count
+   • Forum posts table: Record count
+   • etc.
+
+5. Export database:
+   • Click "Export Database"
+   • Select format: SQL / JSON
+   • System generates downloadable file
+
+===============================================================================
+PART 8: ADVANCED ADMIN FUNCTIONS
+===============================================================================
+
+FUNCTION A: BULK USER OPERATIONS
+─────────────────────────────────────────────────────────────────────────────
+1. From Users page, select multiple users:
+   • Click checkbox next to user name
+   • Use "Select All" for all on current page
+
+2. Bulk actions available:
+   ☑ Deactivate selected users
+   ☑ Activate selected users
+   ☑ Export selected users' data
+   ☑ Send announcement to selected users
+   ☑ Delete selected users (warning!)
+
+3. Choose action from dropdown
+4. Click "Apply"
+5. Confirmation dialog
+6. Action processes for all selected users
+
+FUNCTION B: SEND SYSTEM ANNOUNCEMENTS
+─────────────────────────────────────────────────────────────────────────────
+1. Access communications section (usually in main menu)
+2. Click "Send Announcement"
+3. Fill in announcement details:
+   • Title
+   • Message body
+   • Recipient type: All Users / Active Users / Specific Role
+   • Schedule: Now / Later (select date/time)
+
+4. Preview announcement
+5. Click "Send"
+6. Users see announcement on next login or immediately
+
+FUNCTION C: DATA PRIVACY & EXPORT
+─────────────────────────────────────────────────────────────────────────────
+To comply with data privacy requests from users:
+
+1. User requests their data
+2. Go to user's profile
+3. Click "Export User Data"
+4. Choose format: JSON / CSV / PDF
+5. System compiles:
+   • Account information
+   • All scans and results
+   • Forum posts
+   • Activity logs
+   • Chat history
+
+6. Download generated file
+7. Provide to user
+
+FUNCTION D: DELETE USER DATA
+─────────────────────────────────────────────────────────────────────────────
+For "right to be forgotten" requests:
+
+1. User requests data deletion
+2. Go to user's profile
+3. Click "Delete All User Data"
+4. Warning: This cannot be undone
+5. Type user email to confirm
+6. All user data immediately deleted:
+   • Account
+   • Scan history
+   • Forum posts
+   • Profile information
+
+FUNCTION E: MONITOR API USAGE
+─────────────────────────────────────────────────────────────────────────────
+1. Click "API Usage"
+2. View statistics:
+   • Total API calls today
+   • Peak usage time
+   • Most-used endpoints
+   • Error rate
+   • Response times
+
+3. Set rate limit alerts:
+   • Alert when API calls exceed: threshold
+   • Alert recipients: email addresses
+   • Alert frequency: real-time / hourly summary
+
+===============================================================================
+PART 9: TROUBLESHOOTING FOR ADMINS
+===============================================================================
+
+PROBLEM: User cannot access their account
+─────────────────────────────────────────────────────────────────────────────
+STEPS:
+1. Check user's account status (Active/Inactive/Suspended)
+2. Verify email is verified
+3. Check if password reset needed
+4. Look at login error logs
+5. Temporarily deactivate/reactivate account
+6. If still failing, contact technical support with user ID
+
+PROBLEM: Analysis results seem incorrect
+─────────────────────────────────────────────────────────────────────────────
+STEPS:
+1. Check if correct ML model is deployed
+2. Verify model accuracy metrics in Analytics
+3. Check input image quality
+4. Compare with research data baseline
+5. May need to retrain model if systematic error
+
+PROBLEM: High error rate in logs
+─────────────────────────────────────────────────────────────────────────────
+STEPS:
+1. Check database connection status
+2. Review API logs for patterns
+3. Check server resources (CPU, memory)
+4. Verify external API keys (Gemini, Cloudinary)
+5. Restart affected service
+6. If persists, contact infrastructure team
+
+PROBLEM: Database is growing too large
+─────────────────────────────────────────────────────────────────────────────
+STEPS:
+1. Run database optimization
+2. Archive old analysis data (>1 year)
+3. Delete old user sessions
+4. Compress database
+5. Check backup size - may need cleanup
+6. Monitor growth rate
+
+PROBLEM: User reports unable to upload images
+─────────────────────────────────────────────────────────────────────────────
+STEPS:
+1. Check maximum upload size setting
+2. Verify storage space available
+3. Check user's upload limit (if enforced)
+4. Review upload error logs
+5. Test upload yourself to confirm
+6. May be user's device/internet issue
+
+===============================================================================
+PART 10: BEST PRACTICES FOR ADMINS
+===============================================================================
+
+ACCOUNT MANAGEMENT:
+──────────────────────────────────────────────────────────────────────────────
+• Review new accounts weekly for spam registrations
+• Deactivate accounts with no activity for 6+ months
+• Require password change every 90 days
+• Review admin accounts monthly
+• Remove abandoned admin accounts
+
+SYSTEM MAINTENANCE:
+──────────────────────────────────────────────────────────────────────────────
+• Perform database optimization monthly
+• Review system logs weekly for errors
+• Verify backups are working (test restore quarterly)
+• Update system security patches immediately
+• Monitor disk space - maintain 20% free space
+
+SECURITY:
+──────────────────────────────────────────────────────────────────────────────
+• Use strong admin passwords
+• Enable 2FA on all admin accounts
+• Rotate API keys every 6 months
+• Review access logs for suspicious activity
+• Keep admin activity logs for audit trail
+• Never share admin credentials
+
+COMMUNITY MANAGEMENT:
+──────────────────────────────────────────────────────────────────────────────
+• Monitor forum for policy violations
+• Respond to user reports promptly
+• Send regular system announcements
+• Celebrate community milestones
+• Recognize active contributors
+
+DATA QUALITY:
+──────────────────────────────────────────────────────────────────────────────
+• Verify analysis data accuracy monthly
+• Compare ML model outputs against research baseline
+• Track data quality metrics
+• Investigate significant deviations
+• Retrain models as needed
+
+REPORTING:
+──────────────────────────────────────────────────────────────────────────────
+• Generate monthly reports
+• Share analytics with stakeholders
+• Present trends and insights
+• Document any issues discovered
+• Create quarterly performance summaries
+
+===============================================================================
+
+                            END OF ADMIN MANUAL
+
+        Thank you for administering Talisay AI! Keep the system running!
+
+===============================================================================
+
+DOCUMENT EDITION INFORMATION:
+- Version: 1.0.0
+- Created: March 2026
+- For: Academic Project Submission
+- Language: English
+- Total Pages: ~40 (when printed)
+
+CONTACT & SUPPORT:
+If you have questions about the system, please contact:
+- Administrative Support: admin@talisayai.ph
+- Technical Support: support@talisayai.ph
+- Development Team: dev@talisayai.ph
+
+===============================================================================

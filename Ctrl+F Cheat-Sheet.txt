@@ -1,0 +1,124 @@
+Ctrl+F Cheat-Sheet (Per Source URL)
+Date: 2026-03-20
+
+Use quoted phrases first (most precise), then fallback keywords if page layout differs.
+
+1) https://www.mdpi.com/2311-7524/11/5/540
+(high-confidence, open access)
+
+Exact phrases to Ctrl+F:
+- "kernel-to-fruit ratio (%) was calculated as (weight of individual kernel/individual fruit) × 100"
+- "Oil content was calculated as (mass of oil × 100)/mass of kernel"
+- "Positive correlations were found between fruit mass and kernel mass (r = 0.70)"
+- "The transition of fruit to maturity is distinguished by a change in the exterior fruit flesh colour from green to yellow and then, finally, red"
+
+Fallback keywords:
+- Positive correlations
+- kernel-to-fruit
+- fruit mass
+- kernel mass
+- total oil
+- maturity
+- green to yellow to red
+
+=========================
+another:
+https://doi.org/10.17660/ActaHortic.2022.1340.21
+
+Exact phrases to Ctrl+F:
+- T. catappa had the average kernel to fruit ratio of 4.7%
+
+Fallback keywords:
+- Terminalia catappa
+- Barringtonia spp.
+- kernel size
+- kernel to fruit ratio
+- non-timber forest food
+- food security
+
+------------------------------------------------------------
+
+2) https://comptes-rendus.academie-sciences.fr/chimie/articles/10.1016/j.crci.2016.02.017/
+(high-confidence, open access)
+
+Exact phrases to Ctrl+F:
+- "T. catappa kernel flour was extracted with hexane in a Soxhlet apparatus"
+- "Oil content (g) | 61.76 ± 1.01"
+- "Unsaturated fatty acids represent 54.23% of total fatty acids"
+- "palmitic (C16:0; 40.03%), oleic (C18:1; 27.08%), linoleic (C18:2; 26.64%)"
+
+Fallback keywords:
+- Soxhlet
+- hexane
+- oil content
+- fatty acid profile
+- physico-chemical
+
+------------------------------------------------------------
+
+3) https://doi.org/10.1155/2022/1356092
+(redirects to Wiley; may require login)
+
+Try Ctrl+F with:
+- yield
+- oil extraction
+- Terminalia catappa
+- seed oil
+- extraction
+- physicochemical
+- fatty acid
+- quality
+
+------------------------------------------------------------
+
+4) https://doi.org/10.1080/10942912.2024.2426666
+(Taylor & Francis; may redirect or require access)
+
+Exact phrases to Ctrl+F:
+- The seed kernels of T. catappa contain about 60% oil
+
+Try Ctrl+F with:
+- Terminalia catappa
+- kernel
+- nutritional composition
+- oil
+- fatty acids
+- physicochemical
+
+------------------------------------------------------------
+
+5) https://doi.org/10.1016/j.jfda.2014.06.007
+(JFDA/Elsevier path may vary)
+
+Try Ctrl+F with:
+- Terminalia catappa
+- fatty acid
+- oil
+- acid value
+- iodine value
+- peroxide value
+
+------------------------------------------------------------
+
+6) DOST biodiesel source (link path may change over time)
+Reference used earlier: DOST Region III article on talisay biodiesel potential.
+
+Exact phrases to Ctrl+F:
+- "contains 51.2 percent oil"
+- "solvent extraction"
+- "transesterification"
+- "5:95 blend"
+
+Fallback keywords:
+- biodiesel
+- talisay
+- oil
+- blend
+- ester
+
+------------------------------------------------------------
+
+Quick defense use:
+- Size/Kernel relationship: Start with MDPI source (section 1).
+- Oil % and extraction method: Use CR Chimie source (section 2).
+- Local relevance / biodiesel application: Use DOST source (section 6).

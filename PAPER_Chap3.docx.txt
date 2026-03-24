@@ -1,0 +1,325 @@
+﻿TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES - TAGUIG  
+       Km. 14 East Service Road, Western Bicutan, Taguig City
+
+
+Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+
+
+A Project Presented to the
+Faculty of the Electrical and Allied Department Technological University of the Philippines Taguig Campus Taguig City
+
+
+
+
+     In Partial Fulfillment of the Requirements for the Subject
+System Architecture and Integration 2
+
+
+
+
+Submitted by :
+Del Rosario, Mark Kent I. 
+Mallo, Edilyn P.
+Maranan, Adealix Jairon N.
+Moreno, Chynna F.
+
+
+GROUP 10
+BSIT - S -3A
+
+
+
+
+                Submitted to:
+
+
+Prof. Pops V. Madriaga
+
+
+CHAPTER 3
+Research Methodology
+RESEARCH DESIGN
+        The study utilized developmental and experimental research method through the Agile software development model that was used to design, develop, and test a Machine Learning-Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits with Morphological Feature Analysis. Agile model was selected because of its innovative and short lived approach, in which it can be planned, developed, tested, and improved as the system progresses through its lifetime. The first step involved literature research and analysis of the problem and subsequently, the development of the system requirements was done in short functions known as sprints. Specific sprints were conducted in relation to dataset preparation, image processing, training of the Machine Learning model, morphological feature extraction and user interface refinement. At each iteration, to recognize accuracy and reliability constant testing and evaluation were made by using typical performance measures of the Machine Learning like the Mean Absolute Error (MAE) and Root Mean Square Error (RMSE). The feedback obtained after each cycle was used to improve the functionality of the system and the model performance, whereby the resulting system will eventually be an efficient instrument in data-driven predictions of seed-to-oil conversion ratio of Talisay fruits without any tests being destructive.
+
+
+RESEARCH INSTRUMENT
+        The primary research instrument used in this study is the Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis developed by the researchers. This system functions as a tool for collecting, processing, and analyzing Talisay fruit image data. It incorporates image processing techniques to extract visual features and a trained machine learning model to identify its maturity and measure oil yield. The system was also used to generate details results,  such as accuracy and prediction reliability, which served as the basis for evaluating the effectiveness of the proposed solution. Supporting instruments include a labeled Talisay fruit image dataset obtained from reliable sources, used to train and evaluate the performance of the Machine Learning models
+
+
+RESEARCH RESPONDENTS
+        Farmers, harvesters, and Talisay tree growers will also form a part of the sample since they are the most targeted users of the proposed system. These experts have been chosen as they are the ones dealing with cultivation, collection, and process of Talisay fruits, and are thus the ones who will gain most in the management of an efficient and non-damaging reason to identify high-yield seeds, which produces oil. In order to obtain valid results of evaluation, the respondents must have basic mobile or computer literacy to be able to navigate through the system and evaluate its functionality as a decision-support tool. The effectiveness of the system in predicting the ratio of seed to oil conversion will be measured using their involvement, and it will provide the justification to apply the system practically in enhancing efficiency and minimizing waste in Talisay seed evaluation and agricultural resource management.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DESIGN PROCEDURE
+* PROGRAM FLOWCHART  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 2: Program Flowchart: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+The program flowchart identifies the progression llogic and role-based navigation of the system whereby it begins with the starting point of the program which is the "Start" point which proceeds to the next point of the program which is the "User Registration" and thereafter the next point of the program which is the "Login" where one is authenticated. The system achieves success upon entry providing a Check Access decision feature to differentiate between user roles which essentially separates the workflow into two distinct interfaces. Upon recognition of the user as an Admin, the system allows the user access to administrative features including Manage Users and Manage and View Analytics to manage the system. Instead, when it comes to a regular User, the person is redirected to the main application functions to which they can update their profile, scan Talisay and measure its oil yield, and see their details. Both are the End node that means the user is complete with his or her session and the process is complete.
+
+
+   * SYSTEM FLOWCHART  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3: System Flowchart: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+        System flow chart defines application logic and navigation flow in the system. The first module is User Registration, and the second one is the Login module where the user inputs his/her credentials. A decision diamond with a label Valid? is used as a block at a critically important security checkpoint, in that, in case of false credentials (No), the user is rejected and sent to the login screen again to re-enter their information. When validation success (Yes) is reached, then the system moves on to the Admin? decision gate which identifies the role of the user and that is where he or she should be sent to.
+In case the user is an administrator (Yes), he or she will be redirected to the Admin Dashboard. In this section, the workflow gives the access to User Management where the admin can handle user account and View Talisay Analytics where the admin can see the system data and the prediction action prior to terminating this session.
+Conversely, when the user is not an admin (No), he or she is redirected to the User Dashboard. At this interface, the user is able to carry out the fundamental operation of the system by clicking on Scan Talisay Fruit whereby a picture of the fruit is taken and examined using a Machine Learning model. The user is able to View Result Details like the predictive ratio of seed to oil of the scanned fruit. Other features that can be accessed by regular users are Access Result History which allows them to look at the prior scan results and Manage account profile where they can update their own information. The administrator and the standard user paths arrive at the End node that indicates the successful completion of the systems functioning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      * CONTEXT FLOW DIAGRAM  
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4: Context Flow Diagram: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+        The Context Diagram shows the general high-level communications of the central system with three key external entities: the Admin, the User and the Database. The system is the key processing point where all the data interactions are done.
+
+
+The Admin is the one, who communicates with the system in order to do User Management, which may be the control and management of the registered user accounts. The system, on its part, delivers the generated analytics to the Admin, which might comprise user activity data, and scan trend data according to the Talisay scan; as well as user activity to help with monitoring and decision-making.
+
+
+The system has various data streams that the User interacts with. The user is able to Register and Login to navigate the system, Edit Profile to provide personal details as well as scan a picture of a talisay to predict the yield of oil. To which the request is retracted, the system reacts on the requests and provides various outputs to the user, such as Update Profile confirmations, Analyze Talisay results whereby the Machine Learning model is used to process the scanned fruit image, and Generate Details where the user is presented with the predicted seed-to-oil conversion ratio.  
+
+
+The Database represents the core functioning of the system since it is located in the center of the storage of data. The communication between the system and the database is two-way \- the system will provide information to the database to Manage Information, which will discuss storing and updating the records like user accounts, scan history, and prediction result. This database reciprocates the data to the system in the form of Access Information so that the system will be able to access the required data to provide the necessary data to address the queries by both the user and the admin.
+
+
+
+
+         * DATA FLOW DIAGRAM
+        The Data Flow Diagram (DFD) is a graphical illustration of flow of information in the Talisay Oil Yield Prediction system to show how the input and output information flow through the system. It is a representation of the flow of information between the external objects, namely, the User and the Admin, and the system and its internal processes and data storage. Mapping these pathways makes the DFD clear on how critical system operations like user authentication, Talisay fruit image analysis and data management are addressed in the system, giving a logical picture of the system in terms of its functional requirements and data dependencies.
+
+
+
+
+
+
+
+
+
+
+         * LEVEL 0:          
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 5: Data Flow Diagram - Level 0: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay Fruits using Morphological Feature Analysis
+        Level 0 in the Data Flow Diagram (DFD) is the general view of the system and its boundaries, and is also the relationship between the system and the external ones. The node in the center representing the whole system application acts as the overall processing point of the information transactions of the whole system. This central process interacts with three central entities the Admin, the User and the Database.
+The flow of information starts with the User who feeds the system with inputs by registering and logging in, editing profile, and the main activity which is the Scan Talisay. These inputs are then fed through the system and the relevant outputs are fed back to the User which consists of Update Profile confirmations, Analyze Talisay results whereby the Machine Learning model analyzes the scanned image of the fruit, and Generate Details which display the estimated seed-to-oil conversion ratio of the scanned Talisay fruit. Meanwhile, the Admin entity communicates with the system to detect and manage activities. The input of the admin is in the User Management that includes controlling the user access and the account records. In response, the system will provide Generate Analytics to the Admin and can give an insight regarding the usage of the system and trends of the Talisay scans.
+The Database provides support of all these frontend interactions and acts as the backup data repository. The system sends data to the Database to Manage Information that includes the storage and update of records including user credentials, scan logs and prediction results. The system uses Access Information to retrieve the information of the Database in order to meet the real time demands of the Users and the Admins. This chart is appropriate in providing the overview of the role of the system as the mediator between humans who use the system and the data stored as well as setting up the technology to effectively facilitate the flow of information in all sections of the application.
+            * LEVEL 1:
+  
+
+Figure 6: Data Flow Diagram - Level 1: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay Fruits using Morphological Feature Analysis
+        In this level, the User will interact with the system by providing the registration and login details to the User Authentication process. Once the User’s details are authenticated by the system by comparing them with the User Data stored in the database, the User can request a scan of the fruit by the Scan and Image Processing sub-process. When the image of the Talisay fruit is scanned, the morphological features of the image, such as the size, shape, and color of the fruit, will be gathered and saved by the system and saved in the Scan Records. The morphological features of the image of the fruit then will be inputted to the Machine Learning Prediction. Once the prediction is made by the system, the prediction result will be displayed to the User while the result will also be stored in the ML Analysis Results data store. The User information can be accessed by the Admin through the User and Data Management process by accessing the User Data store.
+
+
+            * LEVEL 2:
+  
+
+Figure 7: Data Flow Diagram - Level 2: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay Fruits using Morphological Feature Analysis
+        When the morphological features are passed on from the Scan and Image Processing module, the features are passed on to the Feature Normalization sub-process, which normalizes the features by scaling the numerical data (length, width, and mass). Once the normalization of the features has taken place, the features are passed on to the Model Inference Engine sub-process, which uses the machine learning algorithms (Random Forest and Gradient Boosting) to predict the oil yield by applying the algorithms to the features and arriving at a predicted value. Once the predicted value has been arrived at, the predicted value is passed on to the Post-Processing and Validation sub-process, which uses the algorithms to validate the predicted value within the range of 45% - 65% and to arrive at other information like the confidence intervals of the predicted value, based on the performance of the model. Once the predicted value and the confidence intervals have been arrived at, the predicted value and the confidence intervals are passed on to the user interface and are stored in the ML Analysis Results data store.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            * ENTITY RELATIONSHIP DIAGRAM
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 8: Entity Relationship Diagram: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay Fruits using Morphological Feature Analysis
+        The system uses a document-based NoSQL database structure (MongoDB) to design the database of the system, which procures the capability of effectively storing and managing all information of Talisay fruit scanning and oil yield prediction. The database is organized into five primary collections, each serving a particular purpose in the overall data architecture.
+The central collection for user management is the “User” collection. It stores authentication details such as email (unique), passwordHash for secure login, role to differentiate between User and Admin, isVerified status, and profile information including firstName, lastName, phone, address, and avatar. Each user document also contains pushTokens for notification delivery and notificationSettings for preference management. This consolidated design eliminates the need for separate account, session, and profile tables by embedding related data within a single document.
+“Prediction” collection stores the results of individual Machine Learning analyses. Each prediction document references a userId and contains the predicted oil yield ratio, confidence scores, color classification probabilities, dimensional measurements (length, width, kernel mass, whole fruit weight), and the model version used for inference.
+“History” collection serves as the core transactional store for scanning activities. Each document records the userId, analysisType (single, comparison, or multi_fruit), imageUri pointing to cloud-stored images via Cloudinary, category classification, and for multi-fruit scans, the fruitCount, colorDistribution, and averageOilYield across all detected fruits.
+“ForumPost” collection enables community interaction within the platform. Each document contains author reference, title, content, optional images array, a likes array tracking user engagements, and an embedded comments subdocument array where each comment contains its own author reference and message text. This embedded subdocument pattern avoids the need for a separate comments collection.
+“Notification” collection manages system notifications, storing recipient references, notification type, message content, read status, and timestamps.
+This document-based NoSQL design ensures flexibility and scalability. By embedding related data within documents rather than spreading it across multiple relational tables, the system achieves efficient read operations and a natural data model that aligns with how the application accesses information. The schema-flexible nature of MongoDB also allows the system to evolve its data structures as new features are developed for the Talisay seed oil prediction platform.
+
+
+            * USE CASE DIAGRAM  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 9: User Case Diagram: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+        Use Case Diagram describes the functional communication between the system and its two key actors including the User and the Admin in terms of what functions can be used by each party. The User engages with the system to carry out the necessary functionality of the system. Registration commences whereby a new user creates an account after which s/he then logs in to access the system in an authenticated manner. After logging in, the User is able to update profile to manage and maintain personal information and explore access history to see historical scan records. The actual functionality that the User can enable is called Scan Talisay that is directly linked to the View Result Details, so that after the image of the Talisay fruit has been scanned and translated through the Machine Learning model, the platform will automatically create and display the projected seed-to-oil conversion percentage to the User.
+
+
+The Admin, in their turn, has another set of administrative privileges that revolve around system monitoring and not operating. The Admin just like the regular User must go through the Login in order to get into the platform. The functions of the Admin are management-based, though, they have the ability to Manage Users to view, control and manage registered user accounts and View/Generate Analytics to trace system usage, scan data patterns and general system behavior.
+
+
+This makes it clear that there are roles separated in the system. The ordinary user has the concentration or emphasis on scans and results access, whereas the system management with monitoring is with the system administrator. Although the two actors have varied tasks, their similarity lies in the fact that they both need to engage in a secure mechanism of authentication via the Login process prior to joining their various functional functionalities.
+
+
+
+
+GANTT CHART
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 10: Gantt Chart: Machine Learning–Based Prediction of Seed-to-Oil Conversion Ratios in Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis
+
+
+        The Gantt chart illustrates the 13-week development schedule for the Machine Learning-Based Prediction of Seed-to-Oil Conversion Ratios in Talisay Fruits system, spanning from January to March. The project workflow is organized into nine parallel tracks to ensure efficient progress across all development phases. The Planning & Requirements gathering and Title Proposal were completed during Weeks 2-3, establishing the foundation for the project. Data Collection & Preparation commenced in Week 4 and continued through Week 8, providing the essential morphological dataset for model training. System Design was executed during Weeks 4-5, followed by parallel development tracks: Frontend Development using React Native/Expo (late Week 4-7), Backend Development with Node.js (Weeks 5-10), and ML Model Development using Python (Weeks 5-9). Testing & Validation begins in Week 6 and extends through Week 10 to ensure system reliability. Documentation and paper writing runs continuously from past Week 9 through Week 13, capturing the development phases. The project culminates with the Final Defense scheduled for Week 13, marking the completion of all project deliverables.

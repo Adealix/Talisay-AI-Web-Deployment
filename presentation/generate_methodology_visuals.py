@@ -58,142 +58,129 @@ def arrow(ax, x1, y1, x2, y2, color="#555555", lw=1.5, head=8):
 
 def fig_transfer_learning():
     """
-    Shows the two-model transfer learning setup:
-      • MobileNetV2  → Color Classifier (green / yellow / brown)
-      • EfficientNetB0 → TalisayGuard  (talisay vs. non-talisay)
-    Both share the same ImageNet pre-trained weights pipeline.
+    Transfer learning architecture laid out as a staged training pipeline:
+      1) Data preparation
+      2) Frozen feature-extraction backbone
+      3) Custom classifier head
+      4) Training configuration / fitting
     """
-    fig, ax = plt.subplots(figsize=(15, 9))
+    fig, ax = plt.subplots(figsize=(16, 9))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
     # ── Palette ─────────────────────────────────────────────────────────────
-    C_IMAGENET  = "#F4A261"   # orange  – shared source
-    C_PRETRAIN  = "#E76F51"   # dark-orange – freeze layers
-    C_FINETUNE1 = "#2A9D8F"   # teal – MobileNetV2 fine-tune head
-    C_FINETUNE2 = "#264653"   # dark – EfficientNetB0 fine-tune head
-    C_OUTPUT    = "#E9C46A"   # yellow – outputs
-    C_LABEL     = "#FFFFFF"
-    C_BG        = "#1A1A2E"
+    C_BG = "#F8FAFC"
+    C_TITLE = "#0F172A"
+    C_SUB = "#475569"
+    C_SECTION = "#E2E8F0"
+
+    C_DATA = "#FDE68A"
+    C_BACKBONE = "#C7F9CC"
+    C_HEAD = "#FBCFE8"
+    C_TRAIN = "#DDD6FE"
+    C_ARROW = "#64748B"
 
     fig.patch.set_facecolor(C_BG)
     ax.set_facecolor(C_BG)
 
     # ── Title ────────────────────────────────────────────────────────────────
-    ax.text(0.5, 0.95, "Transfer Learning Architecture",
-            ha="center", va="center", fontsize=16, color="white",
+    ax.text(0.5, 0.95, "3.4 Transfer Learning Architecture",
+            ha="center", va="center", fontsize=20, color=C_TITLE,
             fontweight="bold")
-    ax.text(0.5, 0.91, "Pre-trained ImageNet weights → Fine-tuned for Talisay Fruit Analysis",
-            ha="center", va="center", fontsize=10, color="#AAAAAA", style="italic")
+    ax.text(0.5, 0.915,
+            "ImageNet transfer learning pipeline used for Talisay fruit classification and guard validation",
+            ha="center", va="center", fontsize=10.5, color=C_SUB, style="italic")
 
-    # ── ImageNet source (top-centre) ─────────────────────────────────────────
-    draw_box(ax, 0.50, 0.82, 0.34, 0.065,
-             "ImageNet Pre-trained Weights",
-             "1.2 M images · 1000 classes",
-             bg=C_IMAGENET, fg="white", font_size=10, radius=0.025)
+    # ── Section labels ────────────────────────────────────────────────────────
+    ax.text(0.13, 0.865, "1. Data Prep", fontsize=10, color=C_TITLE, fontweight="bold")
+    ax.text(0.43, 0.865, "2. Feature Extraction (Frozen)", fontsize=10, color=C_TITLE, fontweight="bold")
+    ax.text(0.77, 0.865, "3. Classifier Head + Training", fontsize=10, color=C_TITLE, fontweight="bold", ha="center")
 
-    # ── Split arrows ─────────────────────────────────────────────────────────
-    arrow(ax, 0.36, 0.785, 0.25, 0.715, color="#AAAAAA")
-    arrow(ax, 0.64, 0.785, 0.75, 0.715, color="#AAAAAA")
-
-    # ─── LEFT BRANCH: MobileNetV2 ────────────────────────────────────────────
-    # Frozen backbone
-    draw_box(ax, 0.25, 0.675, 0.30, 0.07,
-             "MobileNetV2 Backbone",
-             "Frozen layers  ·  ImageNet weights",
-             bg=C_PRETRAIN, fg="white", font_size=9)
-    # Depthwise conv stack visual
-    for i, xoff in enumerate([-0.07, -0.02, 0.03, 0.08]):
-        col = "#1B7A6E" if i % 2 == 0 else "#14524A"
-        draw_box(ax, 0.25 + xoff, 0.585, 0.048, 0.055,
-                 f"DW\nConv\n{'×'*(i+1)}", bg=col, fg="white",
-                 font_size=7, radius=0.015, lw=1)
-    ax.text(0.25, 0.543, "Depthwise-Separable Convolutional Blocks  (96 layers)",
-            ha="center", fontsize=7.5, color="#AAAAAA")
-
-    # Fine-tuned head
-    draw_box(ax, 0.25, 0.475, 0.30, 0.065,
-             "Custom Classification Head",
-             "GlobalAvgPool → Dense(128) → Dropout(0.3) → Dense(3)",
-             bg=C_FINETUNE1, fg="white", font_size=8.5)
-
-    # Output
-    draw_box(ax, 0.25, 0.390, 0.30, 0.065,
-             "Color Classification Output",
-             "Green  |  Yellow  |  Brown",
-             bg=C_OUTPUT, fg="#222222", font_size=9)
-
-    # Vertical arrows (left branch)
-    for y1, y2 in [(0.638, 0.612), (0.557, 0.508), (0.442, 0.423)]:
-        arrow(ax, 0.25, y1, 0.25, y2)
-
-    ax.text(0.25, 0.340,
-            "Fine-tuned on:\nexisting_datasets + own_datasets\n(Green / Yellow / Brown)",
-            ha="center", fontsize=8, color="#AAAAAA", linespacing=1.5)
-
-    ax.text(0.25, 0.83, "MODEL 1", ha="center", fontsize=9,
-            color=C_FINETUNE1, fontweight="bold")
-
-    # ─── RIGHT BRANCH: EfficientNetB0 ────────────────────────────────────────
-    draw_box(ax, 0.75, 0.675, 0.30, 0.07,
-             "EfficientNetB0 Backbone",
-             "Frozen layers  ·  ImageNet weights",
-             bg=C_PRETRAIN, fg="white", font_size=9)
-    # MBConv block visuals
-    for i, xoff in enumerate([-0.09, -0.04, 0.01, 0.06, 0.11]):
-        col = "#374151" if i % 2 == 0 else "#1F2937"
-        draw_box(ax, 0.75 + xoff, 0.585, 0.044, 0.055,
-                 f"MB\nConv\n{i+1}", bg=col, fg="white",
-                 font_size=7, radius=0.015, lw=1)
-    ax.text(0.75, 0.543, "MBConv Blocks with Squeeze-and-Excitation  (7 stages)",
-            ha="center", fontsize=7.5, color="#AAAAAA")
-
-    draw_box(ax, 0.75, 0.475, 0.30, 0.065,
-             "Custom Binary Classification Head",
-             "GlobalAvgPool → Dense(128) → Dropout(0.3) → Dense(1)",
-             bg=C_FINETUNE2, fg="white", font_size=8.5)
-
-    draw_box(ax, 0.75, 0.390, 0.30, 0.065,
-             "Guard Output  (Binary)",
-             "0 = Non-Talisay  |  1 = Talisay  (threshold 0.55)",
-             bg=C_OUTPUT, fg="#222222", font_size=9)
-
-    for y1, y2 in [(0.638, 0.612), (0.557, 0.508), (0.442, 0.423)]:
-        arrow(ax, 0.75, y1, 0.75, y2)
-
-    ax.text(0.75, 0.340,
-            "Fine-tuned on:\nPositive: Talisay images (all colors)\nNegative: non-talisay dataset",
-            ha="center", fontsize=8, color="#AAAAAA", linespacing=1.5)
-
-    ax.text(0.75, 0.83, "MODEL 2", ha="center", fontsize=9,
-            color="#8AB4F8", fontweight="bold")
-
-    # ─── Combined legend / shared detail ─────────────────────────────────────
-    ax.plot([0.5, 0.5], [0.22, 0.28], color="#555555", lw=1, ls="--")
-    draw_box(ax, 0.50, 0.185, 0.70, 0.065,
-             "Shared Training Strategy",
-             "Input 224×224 RGB  ·  Adam(lr=0.001)  ·  50 epochs  ·  "
-             "EarlyStopping(patience=10)  ·  ReduceLROnPlateau  ·  "
-             "Data Augmentation (flip, rotation, brightness, contrast)",
-             bg="#16213E", fg="#DDDDDD", font_size=8.2, radius=0.03, lw=1)
-
-    # ─── Legend patches ───────────────────────────────────────────────────────
-    leg_items = [
-        mpatches.Patch(color=C_IMAGENET, label="Pre-trained source (ImageNet)"),
-        mpatches.Patch(color=C_PRETRAIN, label="Frozen backbone layers"),
-        mpatches.Patch(color=C_FINETUNE1, label="Fine-tuned head – MobileNetV2"),
-        mpatches.Patch(color=C_FINETUNE2, label="Fine-tuned head – EfficientNetB0"),
-        mpatches.Patch(color=C_OUTPUT, label="Model output"),
+    # ── Left lane: data preparation ───────────────────────────────────────────
+    left_steps = [
+        ("Raw Dataset", "train_dataset.csv"),
+        ("Class Balancing", "resampling / weighted classes"),
+        ("Augmentation", "flip · rotation · brightness"),
+        ("Normalize", "pixel values to [0, 1]"),
+        ("Resize to 224×224", "RGB input tensor"),
     ]
-    ax.legend(handles=leg_items, loc="lower right",
-              fontsize=8, framealpha=0.25,
-              labelcolor="white",
-              facecolor="#0F3460", edgecolor="#AAAAAA")
+
+    y_positions = np.linspace(0.78, 0.42, len(left_steps))
+    for idx, ((title, sub), y) in enumerate(zip(left_steps, y_positions)):
+        draw_box(ax, 0.13, y, 0.20, 0.06, title, sub,
+                 bg=C_DATA, fg="#111827", font_size=8.5,
+                 radius=0.015, border="#94A3B8", lw=1.2)
+        if idx < len(left_steps) - 1:
+            arrow(ax, 0.13, y - 0.037, 0.13, y_positions[idx + 1] + 0.038,
+                  color=C_ARROW, lw=1.3)
+
+    # ── Middle lane: frozen backbone block ───────────────────────────────────
+    backbone_frame = FancyBboxPatch(
+        (0.29, 0.31), 0.29, 0.50,
+        boxstyle="round,pad=0.015",
+        linewidth=1.3, edgecolor="#94A3B8", facecolor=C_SECTION,
+        linestyle="--", zorder=1
+    )
+    ax.add_patch(backbone_frame)
+
+    draw_box(ax, 0.435, 0.77, 0.23, 0.06,
+             "ImageNet Pre-trained Backbone",
+             "MobileNetV2 / EfficientNetB0 (frozen)",
+             bg=C_BACKBONE, fg="#0F172A", font_size=8.5,
+             radius=0.015, border="#94A3B8", lw=1.2)
+
+    backbone_blocks = [
+        "Conv Stem 32", "Bottleneck ×2", "Bottleneck ×3",
+        "Bottleneck ×4", "Bottleneck ×2", "Conv 1×1 + BN"
+    ]
+    backbone_y = np.linspace(0.70, 0.40, len(backbone_blocks))
+    for i, (label, y) in enumerate(zip(backbone_blocks, backbone_y)):
+        draw_box(ax, 0.435, y, 0.20, 0.05, label,
+                 "", bg="#DCFCE7", fg="#111827", font_size=8,
+                 radius=0.012, border="#86EFAC", lw=1.0)
+        if i < len(backbone_blocks) - 1:
+            arrow(ax, 0.435, y - 0.031, 0.435, backbone_y[i + 1] + 0.031,
+                  color=C_ARROW, lw=1.2)
+
+    ax.text(0.435, 0.335, "Feature maps transferred to custom head",
+            ha="center", fontsize=8, color=C_SUB, style="italic")
+
+    # Connect left lane to frozen backbone
+    arrow(ax, 0.23, 0.42, 0.315, 0.76, color=C_ARROW, lw=1.4)
+
+    # ── Right lane: classifier head + training ───────────────────────────────
+    right_steps = [
+        ("GlobalAvgPool2D", "flattens spatial feature maps"),
+        ("Dense(128) + ReLU", "Dropout(0.5)"),
+        ("Dense(N classes)", "Softmax / Sigmoid output"),
+        ("Compile", "Adam + loss + metrics"),
+        ("Callbacks", "EarlyStopping, ReduceLROnPlateau"),
+        ("model.fit", "epochs + batch size"),
+    ]
+    right_y = np.linspace(0.72, 0.30, len(right_steps))
+    for i, ((title, sub), y) in enumerate(zip(right_steps, right_y)):
+        bg_col = C_HEAD if i < 3 else C_TRAIN
+        draw_box(ax, 0.77, y, 0.24, 0.055, title, sub,
+                 bg=bg_col, fg="#111827", font_size=8.4,
+                 radius=0.014, border="#94A3B8", lw=1.2)
+        if i < len(right_steps) - 1:
+            arrow(ax, 0.77, y - 0.034, 0.77, right_y[i + 1] + 0.034,
+                  color=C_ARROW, lw=1.2)
+
+    # Connect backbone to head
+    arrow(ax, 0.55, 0.40, 0.65, 0.72, color=C_ARROW, lw=1.4)
+
+    # ── Footer note ──────────────────────────────────────────────────────────
+    draw_box(ax, 0.50, 0.12, 0.82, 0.055,
+             "Output Models",
+             "Model 1: Color Classifier (Green / Yellow / Brown)   |   Model 2: TalisayGuard (Talisay / Non-Talisay)",
+             bg="#DBEAFE", fg="#0F172A", font_size=8.4,
+             radius=0.02, border="#93C5FD", lw=1.2)
 
     plt.tight_layout()
     out = os.path.join(OUT_DIR, "methodology_B_transfer_learning.png")
-    plt.savefig(out, dpi=180, bbox_inches="tight", facecolor=C_BG)
+    plt.savefig(out, dpi=220, bbox_inches="tight", facecolor=C_BG)
     plt.close()
     print(f"[saved] {out}")
 

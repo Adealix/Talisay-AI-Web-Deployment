@@ -3,7 +3,7 @@
  * Comprehensive Terminalia Catappa information: classification, nutrition,
  * medicinal uses, cultural significance, image gallery.
  */
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -25,6 +25,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { Video, ResizeMode } from 'expo-av';
 import { useTheme } from '../contexts/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
 import { Spacing, Shadows, BorderRadius, Typography, Layout as LayoutConst } from '../constants/Layout';
@@ -108,6 +109,34 @@ const GALLERY = [
   { uri: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600', caption: 'Tropical coastal grove' },
   { uri: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600', caption: 'Sunlight through leaves' },
   { uri: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600', caption: 'Forest environment' },
+];
+
+const EXTRACTION_PROCESS_STEPS = [
+  {
+    title: 'Exact Process Preparation',
+    steps: [
+      'Step 1: Wash the Talisay Seeds. Begin by thoroughly washing organic Talisay Seeds in a bowl of water to remove any impurities.',
+      'Step 2: Dry the Talisay Seeds. Spread the washed Talisay Seeds on a baking sheet lined with parchment paper .',
+      'Step 3: Low-Heat Oven Drying. Place the Talisay Seeds in an oven at a very low temperature for just a few minutes. The goal is to remove all moisture, making them easier to blend, without actually roasting them.',
+    ],
+  },
+  {
+    title: 'Extraction Process',
+    steps: [
+      'Step 4: Blending. Put the dried Talisay Seeds into a mortar and pestle.',
+      'Step 5: Process to a Paste. Blend the Talisay Seeds until they transform from a coarse meal into a smooth, thick Talisay Seed paste.',
+      'Step 6: Store and Settle. Transfer the almond paste into an airtight plastic container. Close the lid tightly and let the container sit undisturbed for several days or squeeze the paste to extract the oil.',
+    ],
+  },
+  {
+    title: 'Finishing',
+    steps: [
+      'Step 7: Separation. Over time, you will notice the oil naturally separating and rising to the top of the paste.',
+      'Step 8: Strain. Carefully pour the oil and paste through a clean cloth or a thick paper towel over a bowl. Squeeze the cloth firmly to extract every drop of the pure Talisay Seed oil .',
+      'Step 9: Storage. Store your finished almond oil in a clean glass container at room temperature.',
+      'Preparation',
+    ],
+  },
 ];
 
 // ─── Fruit Maturity Stages ───
@@ -672,6 +701,185 @@ function TalisayProductsSection({ isMobile }) {
   );
 }
 
+function formatVideoTime(ms = 0) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+function ExtractionProcessSection() {
+  const { colors } = useTheme();
+  const [expanded, setExpanded] = useState(false);
+  const [videoAspectRatio, setVideoAspectRatio] = useState(16 / 9);
+  const [playbackStatus, setPlaybackStatus] = useState({
+    isLoaded: false,
+    isPlaying: false,
+    positionMillis: 0,
+    durationMillis: 0,
+  });
+  const [seekBarWidth, setSeekBarWidth] = useState(0);
+  const videoRef = useRef(null);
+
+  const isLoaded = playbackStatus?.isLoaded;
+  const isPlaying = playbackStatus?.isPlaying;
+  const positionMillis = playbackStatus?.positionMillis || 0;
+  const durationMillis = playbackStatus?.durationMillis || 0;
+  const progress = durationMillis > 0 ? positionMillis / durationMillis : 0;
+
+  const updateVideoAspectRatioFromNaturalSize = (naturalSize) => {
+    const rawWidth = Number(naturalSize?.width);
+    const rawHeight = Number(naturalSize?.height);
+    const orientation = String(naturalSize?.orientation || '').toLowerCase();
+
+    if (!Number.isFinite(rawWidth) || !Number.isFinite(rawHeight) || rawWidth <= 0 || rawHeight <= 0) {
+      return;
+    }
+
+    let width = rawWidth;
+    let height = rawHeight;
+
+    if (orientation === 'portrait' && width > height) {
+      [width, height] = [height, width];
+    } else if (orientation === 'landscape' && height > width) {
+      [width, height] = [height, width];
+    }
+
+    const ratio = width / height;
+    if (Number.isFinite(ratio) && ratio > 0) {
+      setVideoAspectRatio(ratio);
+    }
+  };
+
+  const onPlaybackStatusUpdate = (status) => {
+    setPlaybackStatus(status);
+
+    if (status?.isLoaded && status?.naturalSize) {
+      updateVideoAspectRatioFromNaturalSize(status.naturalSize);
+    }
+  };
+
+  const togglePlayPause = async () => {
+    if (!videoRef.current || !isLoaded) return;
+    if (isPlaying) {
+      await videoRef.current.pauseAsync();
+    } else {
+      await videoRef.current.playAsync();
+    }
+  };
+
+  const seekBy = async (deltaMs) => {
+    if (!videoRef.current || !isLoaded) return;
+    const current = Number(positionMillis);
+    const duration = Number(durationMillis);
+    const delta = Number(deltaMs);
+    if (!Number.isFinite(current) || !Number.isFinite(delta)) return;
+
+    const rawNext = current + delta;
+    const boundedNext = Number.isFinite(duration) && duration > 0
+      ? Math.min(Math.max(0, rawNext), duration)
+      : Math.max(0, rawNext);
+
+    if (!Number.isFinite(boundedNext)) return;
+    await videoRef.current.setPositionAsync(boundedNext);
+  };
+
+  const seekToRatio = async (ratio) => {
+    if (!videoRef.current || !isLoaded) return;
+    const duration = Number(durationMillis);
+    const inputRatio = Number(ratio);
+    if (!Number.isFinite(duration) || duration <= 0 || !Number.isFinite(inputRatio)) return;
+
+    const clamped = Math.min(Math.max(0, inputRatio), 1);
+    const targetMs = clamped * duration;
+    if (!Number.isFinite(targetMs)) return;
+
+    await videoRef.current.setPositionAsync(targetMs);
+  };
+
+  return (
+    <Animated.View entering={FadeInUp.delay(120).duration(280)} style={[styles.extractionCard, { backgroundColor: colors.card, borderColor: colors.borderLight, ...Shadows.sm }]}> 
+      <Pressable onPress={() => setExpanded((prev) => !prev)} style={styles.extractionHeader}>
+        <View style={[styles.extractionIcon, { backgroundColor: '#22c55e15' }]}>
+          <Ionicons name="flask" size={20} color="#22c55e" />
+        </View>
+        <View style={{ flex: 1, gap: 2 }}>
+          <Text style={[styles.extractionTitle, { color: colors.text }]}>How Oil is Extracted from Talisay</Text>
+          <Text style={[styles.extractionSub, { color: colors.textSecondary }]}>Tap to view the full step-by-step process</Text>
+        </View>
+        <Ionicons name={expanded ? 'chevron-up' : 'chevron-down'} size={20} color={colors.textTertiary} />
+      </Pressable>
+
+      {expanded && (
+        <Animated.View entering={FadeInUp.duration(220)} style={[styles.extractionContent, { borderTopColor: colors.borderLight }]}> 
+          {EXTRACTION_PROCESS_STEPS.map((group) => (
+            <View key={group.title} style={styles.extractionGroup}>
+              <Text style={[styles.extractionGroupTitle, { color: colors.text }]}>{group.title}</Text>
+              {group.steps.map((line, idx) => (
+                <Text key={`${group.title}-${idx}`} style={[styles.extractionLine, { color: colors.textSecondary }]}>
+                  {line}
+                </Text>
+              ))}
+            </View>
+          ))}
+
+          <View style={styles.extractionVideoWrap}>
+            <Video
+              ref={videoRef}
+              source={require('../assets/videos/extract_process.mp4')}
+              style={[styles.extractionVideo, { aspectRatio: videoAspectRatio }]}
+              useNativeControls={false}
+              shouldPlay={false}
+              isLooping={false}
+              resizeMode={ResizeMode.CONTAIN}
+              onReadyForDisplay={({ naturalSize }) => updateVideoAspectRatioFromNaturalSize(naturalSize)}
+              onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+            />
+
+            <View style={[styles.videoPlayerOverlay, { backgroundColor: 'rgba(0,0,0,0.45)' }]}>
+              <View style={styles.videoControlRow}>
+                <Pressable onPress={() => seekBy(-10000)} style={styles.videoControlBtn}>
+                  <Ionicons name="play-back" size={18} color="#fff" />
+                  <Text style={styles.videoControlText}>10s</Text>
+                </Pressable>
+
+                <Pressable onPress={togglePlayPause} style={styles.videoPlayBtn}>
+                  <Ionicons name={isPlaying ? 'pause' : 'play'} size={20} color="#fff" />
+                </Pressable>
+
+                <Pressable onPress={() => seekBy(10000)} style={styles.videoControlBtn}>
+                  <Ionicons name="play-forward" size={18} color="#fff" />
+                  <Text style={styles.videoControlText}>10s</Text>
+                </Pressable>
+              </View>
+
+              <View style={styles.videoBottomBar}>
+                <Text style={styles.videoTimeText}>{formatVideoTime(positionMillis)}</Text>
+                <Pressable
+                  style={styles.videoSeekTrack}
+                  onLayout={(e) => setSeekBarWidth(e.nativeEvent.layout.width)}
+                  onPress={(e) => {
+                    const width = Number(seekBarWidth);
+                    const x = Number(e?.nativeEvent?.locationX);
+                    if (!Number.isFinite(width) || width <= 0 || !Number.isFinite(x)) return;
+                    const ratio = x / width;
+                    if (!Number.isFinite(ratio)) return;
+                    seekToRatio(ratio);
+                  }}
+                >
+                  <View style={styles.videoSeekTrackBg} />
+                  <View style={[styles.videoSeekTrackFill, { width: `${Math.min(Math.max(progress * 100, 0), 100)}%` }]} />
+                </Pressable>
+                <Text style={styles.videoTimeText}>{formatVideoTime(durationMillis)}</Text>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+      )}
+    </Animated.View>
+  );
+}
+
 export default function AboutTalisayPage() {
   const { colors, isDark } = useTheme();
   const { isMobile, isDesktop } = useResponsive();
@@ -713,6 +921,8 @@ export default function AboutTalisayPage() {
             branching pattern and large, leathery leaves that turn vivid red and orange before falling.
           </Text>
         </Animated.View>
+
+        <ExtractionProcessSection />
 
         {/* ═══ FRUIT MATURITY STAGES ═══ */}
         <Animated.View entering={FadeInUp.delay(140).duration(280)}>
@@ -1142,6 +1352,116 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.lg,
   },
   introText: { ...Typography.body, lineHeight: 24 },
+
+  /* Extraction Process */
+  extractionCard: {
+    borderRadius: BorderRadius.lg,
+    borderWidth: 1,
+    overflow: 'hidden',
+    marginBottom: Spacing.lg,
+  },
+  extractionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    padding: Spacing.md,
+    ...Platform.select({ web: { cursor: 'pointer' } }),
+  },
+  extractionIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: BorderRadius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  extractionTitle: { ...Typography.bodyMedium },
+  extractionSub: { ...Typography.small },
+  extractionContent: {
+    borderTopWidth: 1,
+    padding: Spacing.md,
+    gap: Spacing.md,
+  },
+  extractionGroup: { gap: 6 },
+  extractionGroupTitle: { ...Typography.captionMedium, fontWeight: '700' },
+  extractionLine: { ...Typography.small, lineHeight: 21 },
+  extractionVideoWrap: {
+    borderRadius: BorderRadius.md,
+    overflow: 'hidden',
+    marginTop: 4,
+    backgroundColor: '#000',
+    position: 'relative',
+  },
+  extractionVideo: {
+    width: '100%',
+  },
+  videoPlayerOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: 10,
+    paddingTop: 8,
+    paddingBottom: 10,
+    gap: 8,
+  },
+  videoControlRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+  },
+  videoControlBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderRadius: 999,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    ...Platform.select({ web: { cursor: 'pointer' } }),
+  },
+  videoPlayBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    ...Platform.select({ web: { cursor: 'pointer' } }),
+  },
+  videoControlText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  videoBottomBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  videoSeekTrack: {
+    flex: 1,
+    height: 16,
+    justifyContent: 'center',
+    ...Platform.select({ web: { cursor: 'pointer' } }),
+  },
+  videoSeekTrackBg: {
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: 'rgba(255,255,255,0.35)',
+  },
+  videoSeekTrackFill: {
+    position: 'absolute',
+    left: 0,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#ef4444',
+  },
+  videoTimeText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '600',
+  },
 
   twoCol: {
     flexDirection: 'row',

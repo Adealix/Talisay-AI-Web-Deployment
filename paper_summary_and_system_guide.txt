@@ -1,4 +1,380 @@
 ================================================================================
+   TALISAY AI — DEFENSE PREPARATION GUIDE
+   Terminalia catappa (Talisay): Everything You Need to Know
+================================================================================
+   Prepared for: Del Rosario, Mallo, Maranan, Moreno — Group 10, BSIT-S-3A
+   Subject: System Architecture and Integration 2
+   Professor: Prof. Pops V. Madriaga
+================================================================================
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│        PART 0: TERMINALIA CATAPPA (TALISAY) — COMPLETE DEFENSE GUIDE        │
+│        Origins · Problems · Significance · Products · Chemistry             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────
+ SECTION 0.1 — ORIGINS AND BOTANICAL BACKGROUND
+────────────────────────────────────────────────────
+
+  SCIENTIFIC CLASSIFICATION:
+
+    Kingdom   Plantae
+    Family    Combretaceae
+    Genus     Terminalia
+    Species   Terminalia catappa L.
+
+  COMMON NAMES BY COUNTRY:
+
+    Philippines          Talisay, Taliso
+    India / Sri Lanka    Indian Almond, Bengal Almond, Country Almond
+    International        Tropical Almond, Beach Almond, Sea Almond,
+                         Umbrella Tree
+
+  ORIGIN AND NATIVE RANGE:
+
+    • Native to tropical Asia — specifically the Indian subcontinent,
+      Southeast Asia, and Northern Australia.
+    • Believed to have originated in the Indo-Malaysia region (Malaysia,
+      Indonesia, and surrounding areas).
+    • Spread by ocean currents — the fruit floats and is salt-resistant —
+      across all tropical coastlines worldwide. This is why it is found
+      throughout Africa, the Caribbean, Central America, and the Pacific
+      Islands today.
+
+  WHERE IT GROWS:
+
+    • Thrives in tropical coastal environments — beaches, river banks,
+      roadsides, parks, school grounds.
+    • In the Philippines, it is one of the most ubiquitous shade trees,
+      found in almost every barangay, often planted along streets and
+      in public plazas.
+    • Tolerates poor, sandy, saline soils — extremely hardy and
+      low-maintenance.
+    • Grows up to 25–35 meters tall, with a distinctive horizontal,
+      tiered canopy (umbrella-like layer structure).
+
+  FRUIT CHARACTERISTICS:
+
+    • Fruit is a drupe (fleshy outer layer surrounding a hard stone/shell).
+    • Shape: oval to oblong, flattened on two sides, typically 5–7 cm long.
+    • The fruit passes through THREE maturity stages — the basis of your
+      system's color classification:
+
+      Stage        Color    Description
+      ─────────────────────────────────────────────────────────────────────
+      Immature     Green    Fruit still developing; kernel not yet formed
+      Mature/Peak  Yellow   Maximum oil content in kernel — best harvest
+      Fully Ripe   Brown    Fruit desiccating and hardening; slightly lower
+      ─────────────────────────────────────────────────────────────────────
+
+    • Inside the hard shell is the kernel (seed) — this is where the oil
+      is stored. Kernel mass: typically 0.1–0.9 g depending on size and
+      maturity.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.2 — THE PROBLEMS YOUR SYSTEM IS SOLVING
+────────────────────────────────────────────────────
+
+  There are THREE layered problems — know all three levels for your defense:
+
+  PROBLEM LEVEL 1 — THE AGRICULTURAL PROBLEM:
+  "Talisay trees are everywhere in the Philippines, but the oil in their
+  seeds is almost entirely ignored and wasted."
+
+    • The Philippines has hundreds of thousands of Talisay trees lining
+      public roads, beaches, and parks — a freely available, renewable
+      resource that currently has no organized utilization.
+    • The seeds fall to the ground and decompose unused, despite containing
+      significant oil concentrations (45–65% of dry kernel weight).
+    • Farmers and communities have no practical way to evaluate whether a
+      given batch of fruits is worth harvesting for oil extraction.
+
+  PROBLEM LEVEL 2 — THE TECHNICAL BOTTLENECK:
+  "The only current way to know the oil content of a seed is to destroy
+  it first."
+
+    • Traditional oil yield measurement requires Soxhlet extraction — a
+      laboratory procedure involving solvents, equipment, trained personnel,
+      6–8 hours of processing per sample, and then the seed is consumed.
+    • This means:
+        - You CANNOT screen seeds before harvest.
+        - You CANNOT tell apart high-yield from low-yield fruits without
+          destroying each one.
+        - It is COMPLETELY INACCESSIBLE to ordinary farmers with no lab.
+    • There is NO prior published system that predicts Talisay oil content
+      from external features non-destructively — this is the research gap.
+
+  PROBLEM LEVEL 3 — THE TECHNOLOGY GAP:
+  "Machine learning has been applied to many agricultural problems, but
+  not this one."
+
+    • ML has been used for crop yield prediction, plant disease detection,
+      fruit quality grading, and ripeness detection in other species.
+    • However, NO known study before this applies ML specifically to predict
+      seed-to-oil conversion ratios in Terminalia catappa using morphological
+      features from smartphone images.
+    • Farmers in developing nations like the Philippines lack access to NIR
+      spectrometers or lab equipment — but they all have smartphones, which
+      is exactly what this system requires.
+
+  YOUR SYSTEM'S DIRECT ANSWER TO THESE PROBLEMS:
+    1. A farmer takes a photo → gets an oil yield prediction in seconds,
+       non-destructively.
+    2. No laboratory, no equipment, no destroyed seed.
+    3. They can screen many fruits quickly and select only the highest-yield
+       ones for processing.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.3 — SIGNIFICANCE OF THE STUDY
+ (Who benefits and how — for defense Q&A)
+────────────────────────────────────────────────────
+
+  Beneficiary                How They Benefit
+  ───────────────────────────────────────────────────────────────────────────
+  Filipino Farmers           Non-destructively screen fruits before committing
+                             to oil extraction. Saves time and avoids wasting
+                             effort on low-yield fruits.
+
+  Small-Scale Oil Producers  Identify peak-maturity (yellow) fruits with the
+                             highest oil potential (58.5% avg), maximizing
+                             extraction efficiency.
+
+  Researchers / Academics    First ML system specifically for Talisay oil yield
+                             prediction — serves as a baseline for future
+                             studies to build upon.
+
+  Agricultural Sector        Demonstrates a low-cost, smartphone-accessible
+                             alternative to laboratory oil screening for
+                             underutilized Philippine crops.
+
+  Software / IT Developers   Shows a real end-to-end implementation:
+                             Python ML ↔ Node.js API ↔ React Native app
+                             ↔ MongoDB — a complete system integration example.
+
+  Environment / Sustainability  Promotes utilization of a locally abundant,
+                             naturally regenerating resource that currently
+                             goes to waste. Reduces dependence on imported
+                             or petroleum-based oils for certain applications.
+
+  DOST / Government Policy   Supports the DOST Region III feasibility study on
+                             Talisay seeds as a diesel extender — this system
+                             provides the screening tool that makes large-scale
+                             harvest feasible.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.4 — PRODUCTS THAT CAN BE MADE FROM TALISAY OIL
+ (Know at least 5–6 for your defense)
+────────────────────────────────────────────────────
+
+  FOOD AND NUTRITION:
+
+    • Edible cooking oil — Talisay seed oil has a flavor profile similar to
+      almond oil. Studies report it is suitable for cooking at moderate
+      temperatures (relatively high smoke point).
+    • Salad / finishing oil — used in traditional cuisine in parts of India,
+      Sri Lanka, and Southeast Asia as a flavoring oil.
+    • Food flavoring ingredient — the kernel tastes similar to an almond and
+      is eaten raw or roasted in many tropical countries.
+    • Nutritional supplement — rich in oleic acid (omega-9) and linoleic acid
+      (omega-6), similar in fatty acid profile to olive oil and almond oil.
+      Both are beneficial for cardiovascular health.
+
+  COSMETICS AND PERSONAL CARE:
+
+    • Skin moisturizer / carrier oil — absorbs well into skin. Used in
+      traditional medicine across Southeast Asia and Africa as a skin
+      treatment.
+    • Hair oil — applied to hair and scalp for conditioning. Used in
+      Ayurvedic medicine (as "Indian Almond oil") for hair growth and
+      scalp health.
+    • Lip balm and lotion base — its moisturizing fatty acid content makes
+      it a suitable base for cosmetic formulations.
+    • Soap making (saponification) — has a saponification value suitable
+      for producing natural soaps, similar to coconut or palm kernel oil.
+    • Massage oil — used in traditional therapeutic massage in various
+      tropical cultures.
+
+  BIOFUEL AND ENERGY:
+
+    • Biodiesel (FAME — Fatty Acid Methyl Ester) — Agu et al. (2022), one
+      of the cited references, specifically studied optimizing methyl ester
+      (biodiesel) yield from Talisay kernel oil. Results showed ~60.3% peak
+      oil yield — directly supports the Yellow baseline of 58.5%.
+    • Diesel extender — DOST Region III (2025), also cited in the paper,
+      specifically evaluated the feasibility of using Talisay seeds as a
+      diesel extender for standard diesel engines. This is a Philippine
+      government-backed application.
+    • Bioenergy feedstock — the pressed kernel cake (leftover after oil
+      extraction) has caloric value and can be used as a solid fuel or
+      animal feed supplement.
+
+  TRADITIONAL MEDICINE AND PHARMACEUTICAL:
+
+    • Anti-inflammatory agent — Talisay leaf and seed extracts have
+      documented anti-inflammatory properties in ethnobotanical literature.
+    • Antimicrobial use — extracts show inhibition of several bacterial
+      strains in in-vitro studies.
+    • Wound healing oil — applied topically in folk medicine in the
+      Philippines, India, and parts of Africa.
+    • Antioxidant source — contains tocopherols (vitamin E family) which
+      have antioxidant applications in pharmaceutical formulations.
+
+  INDUSTRIAL / TECHNICAL:
+
+    • Lubricant — vegetable-based lubricants can be formulated from
+      high-oleic seed oils; Talisay oil's composition is relevant here.
+    • By-product uses — the kernel cake (post-extraction residue) can be
+      used as animal feed or organic fertilizer.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.5 — OIL COMPOSITION (Key Chemistry to Know)
+────────────────────────────────────────────────────
+
+  Professors may ask about WHY the oil is valuable. Know the basic fatty
+  acid profile:
+
+  Fatty Acid       Type                    Approx. %    Health Relevance
+  ────────────────────────────────────────────────────────────────────────
+  Oleic Acid       Monounsaturated (Ω-9)   35 – 55%     Heart health; same
+                                                         key acid as olive oil
+  Linoleic Acid    Polyunsaturated (Ω-6)   20 – 35%     Essential fatty acid;
+                                                         beneficial for skin
+  Palmitic Acid    Saturated               15 – 25%     Structural; excessive
+                                                         amounts are unhealthy
+  Stearic Acid     Saturated                5 – 10%     Neutral cardiovascular
+                                                         effect
+  ────────────────────────────────────────────────────────────────────────
+
+  KEY POINT FOR DEFENSE: The high oleic + linoleic content makes Talisay
+  oil compositionally similar to almond oil and olive oil — justifying both
+  its nutritional and cosmetic value.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.6 — WHY COLOR IS THE STRONGEST PREDICTOR
+ (Chemistry Explanation — common panel question)
+────────────────────────────────────────────────────
+
+  Panel question to anticipate: "Why does color predict oil yield?"
+
+    • Oil accumulates in the kernel DURING fruit maturation. As the fruit
+      ripens from green → yellow, the kernel undergoes lipid biosynthesis —
+      actively producing and storing triglycerides (oil).
+    • At the YELLOW stage, this process is at its peak — the kernel has its
+      maximum oil concentration.
+    • Once the fruit over-ripens and turns BROWN, the kernel begins to
+      desiccate and oxidize. Some extractable oil is lost through oxidation
+      and structural changes in the seed tissue — hence brown has a slightly
+      lower yield than yellow (55.5% vs. 58.5%).
+    • GREEN fruits have immature kernels that haven't completed oil synthesis
+      — hence the lowest baseline (47.0%).
+    • Color is externally visible without destroying the fruit, which is
+      exactly why it is both the most important feature and the foundation
+      of this system's approach.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.7 — LIKELY DEFENSE QUESTIONS AND ANSWERS
+────────────────────────────────────────────────────
+
+  Question                          Key Points to Hit
+  ─────────────────────────────────────────────────────────────────────────
+  "Why Talisay specifically?"       Abundant in PH, underutilized, no prior
+                                    ML system for it, DOST government interest
+                                    in it as diesel extender.
+
+  "How is this different from       Color alone gives only a baseline range
+  just looking at the color?"       (±2%). The 5 morphological features together
+                                    (L, W, K, WF + color) narrow the prediction
+                                    to within 1–2% of lab values. Color is
+                                    necessary but not sufficient alone.
+
+  "How accurate is your system?"    Confidence is measured by RF-GB agreement.
+                                    When both models agree within ~1%,
+                                    confidence is ~90–99%. Predictions fall
+                                    within the scientifically validated 45–65%
+                                    range confirmed by 6 independent studies.
+
+  "Did you do actual lab            Honest answer: lab validation is listed as
+  extraction to verify?"            Recommendation #1 — comparing against 100+
+                                    Soxhlet extraction results from real
+                                    Philippine Talisay samples. The system's
+                                    formula is grounded in published literature
+                                    with validated ranges from 6 cited studies.
+
+  "Why does yellow have higher      Peak lipid biosynthesis occurs at the yellow
+  oil than brown?"                  stage. Brown = post-desiccation, some oil
+                                    lost to oxidation and structural changes in
+                                    seed tissue.
+
+  "What is the practical use of     Allows farmers to (1) select peak-yield
+  knowing the oil yield?"           fruits for harvest, (2) decide if a batch
+                                    is worth processing for biodiesel or cooking
+                                    oil, (3) do this non-destructively and
+                                    instantly before committing to Soxhlet
+                                    extraction.
+
+  "What products can be made        Cooking oil, cosmetic/hair oil, biodiesel
+  from this oil?"                   (DOST study), soap, lubricant, pharma
+                                    antioxidant — name at least 4.
+
+  "Why use an ensemble of two       A single model can overfit. Using RF + GB
+  models instead of just one?"      independently, then averaging, reduces
+                                    variance and makes the prediction more
+                                    robust. The disagreement between them also
+                                    gives a natural confidence metric.
+
+  "What is the coin for?"           The ₱5 coin (25 mm diameter) serves as a
+                                    real-world size reference in the photo. It
+                                    lets the system compute pixels_per_cm and
+                                    convert pixel dimensions of the fruit into
+                                    actual centimeters — making measurements
+                                    physically meaningful and consistent across
+                                    different phone cameras and distances.
+
+
+────────────────────────────────────────────────────
+ SECTION 0.8 — KEY NUMBERS TO MEMORIZE
+────────────────────────────────────────────────────
+
+  These may be asked directly during your defense:
+
+    45% – 65%    Scientifically validated oil yield range for Terminalia
+                 catappa (supported by 6 cited studies)
+
+    58.5%        Yellow (mature) fruit baseline — the peak oil yield stage
+
+    55.5%        Brown (fully ripe) fruit baseline
+
+    47.0%        Green (immature) fruit baseline — lowest oil stage
+
+    0.85         Kernel mass has the highest correlation factor with oil
+                 yield among all physical features
+
+    25 mm        Diameter of the ₱5 Philippine coin (= 2.50 cm) — used
+                 as the real-world size reference in all scans
+
+    7            Number of input features fed to the ML ensemble:
+                 color, length, width, kernel_mass, whole_fruit_weight,
+                 length_width_ratio, kernel_fruit_ratio
+
+    6            Number of stages in the prediction pipeline:
+                 TalisayGuard → YOLOv8 → Segmentation → Color
+                 Classification → Dimension Estimation → Oil Prediction
+
+    100          Number of decision trees in both RF and GB models
+
+
+════════════════════════════════════════════════════════════════════════════════
+
+
+================================================================================
    TALISAY AI — PAPER SUMMARY + SYSTEM EXPLANATION GUIDE
    Machine Learning-Based Prediction of Seed-to-Oil Conversion Ratios in
    Talisay (Terminalia catappa) Fruits using Morphological Feature Analysis

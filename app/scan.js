@@ -94,6 +94,64 @@ const getRecommendation = (cat) => {
   }
 };
 
+const OIL_ML_PER_FRUIT = {
+  YELLOW: 0.05,
+  BROWN: 0.03,
+  GREEN: 0.01,
+};
+
+const OIL_SAFETY_FACTOR_BY_COLOR = {
+  YELLOW: 0.75,
+  BROWN: 0.7,
+  GREEN: 0.6,
+};
+
+const formatMl = (value) => Number(value).toFixed(2);
+const formatCalc = (value, digits = 2) => Number(value || 0).toFixed(digits);
+
+const getColorCountsFromResult = (result) => {
+  if (!result) return {};
+
+  if (result.multiFruit) {
+    if (result.colorDistribution && Object.keys(result.colorDistribution).length > 0) {
+      return Object.entries(result.colorDistribution).reduce((acc, [color, count]) => {
+        acc[color?.toUpperCase()] = Number(count) || 0;
+        return acc;
+      }, {});
+    }
+
+    if (Array.isArray(result.fruits) && result.fruits.length > 0) {
+      return result.fruits.reduce((acc, fruit) => {
+        const color = fruit?.color?.toUpperCase();
+        if (!color) return acc;
+        acc[color] = (acc[color] || 0) + 1;
+        return acc;
+      }, {});
+    }
+  }
+
+  const singleColor = result.category?.toUpperCase();
+  return singleColor ? { [singleColor]: 1 } : {};
+};
+
+const estimateMinimumOilMl = (result) => {
+  const colorCounts = getColorCountsFromResult(result);
+  const conservativeMl = Object.entries(colorCounts).reduce((sum, [color, count]) => {
+    const perFruit = OIL_ML_PER_FRUIT[color] || 0;
+    const safetyFactor = OIL_SAFETY_FACTOR_BY_COLOR[color] ?? 0.6;
+    return sum + (perFruit * count * safetyFactor);
+  }, 0);
+
+  return conservativeMl;
+};
+
+const estimateConservativeOilMlByColor = (color, count = 1) => {
+  const normalizedColor = color?.toUpperCase();
+  const perFruit = OIL_ML_PER_FRUIT[normalizedColor] || 0;
+  const safetyFactor = OIL_SAFETY_FACTOR_BY_COLOR[normalizedColor] ?? 0.6;
+  return perFruit * count * safetyFactor;
+};
+
 // ─── Floating Orb ───
 function FloatingOrb({ delay = 0, size = 60, color, top, left, right }) {
   const float = useSharedValue(0);
@@ -403,6 +461,31 @@ function DetailCard({ icon, iconColor, title, children, delay = 0, colors }) {
 function FullDetailsView({ result, colors, isDark, compact = false }) {
   if (!result) return null;
   const delayBase = compact ? 0 : 50;
+  const minimumOilMl = estimateMinimumOilMl(result);
+  const [showOilFormula, setShowOilFormula] = useState(false);
+  const [showOilMlFormula, setShowOilMlFormula] = useState(false);
+
+  const fruitLength = result?.dimensions?.length_cm;
+  const fruitWidth = result?.dimensions?.width_cm;
+  const kernelMass = result?.dimensions?.kernel_mass_g;
+  const hasDimensionData = fruitLength != null && fruitWidth != null;
+  const sizeFactor = hasDimensionData ? ((fruitLength * fruitWidth) / (5 * 3.5)) : null;
+  const simpleKernelEstimate = sizeFactor != null ? (0.4 * sizeFactor) : null;
+  const oilCalculation = result?.raw?.oil_calculation || null;
+  const calcInputs = oilCalculation?.inputs || {};
+  const mlPredictions = oilCalculation?.model_predictions || null;
+  const formulaComponents = oilCalculation?.formula_components || null;
+  const multiFruitEntries = Array.isArray(result?.fruits) ? result.fruits : [];
+  const multiOilValues = multiFruitEntries
+    .map((f) => Number(f?.oil_yield_percent))
+    .filter((v) => Number.isFinite(v));
+  const colorCountsForMl = getColorCountsFromResult(result);
+  const mlBreakdown = Object.entries(colorCountsForMl).map(([color, count]) => {
+    const perFruit = OIL_ML_PER_FRUIT[color] || 0;
+    const safety = OIL_SAFETY_FACTOR_BY_COLOR[color] ?? 0.6;
+    const subtotal = perFruit * safety * count;
+    return { color, count, perFruit, safety, subtotal };
+  });
 
   return (
     <View style={styles.detailsWrap}>
@@ -416,7 +499,9 @@ function FullDetailsView({ result, colors, isDark, compact = false }) {
                 <View style={[styles.catBadgeSm, { backgroundColor: getCategoryColor(f.color?.toUpperCase()) }]}>
                   <Text style={styles.catBadgeSmText}>#{f.fruit_index ?? (i + 1)} {f.color?.toUpperCase()}</Text>
                 </View>
-                <Text style={styles.fruitOilText}>{f.oil_yield_percent?.toFixed(1)}% oil</Text>
+                <Text style={styles.fruitOilText}>
+                  {f.oil_yield_percent?.toFixed(1)}% oil · Around {formatMl(estimateConservativeOilMlByColor(f.color, 1))} ml
+                </Text>
               </View>
               {f.dimensions && (
                 <Text style={[styles.fruitDimText, { color: colors.textTertiary }]}>
@@ -504,10 +589,124 @@ function FullDetailsView({ result, colors, isDark, compact = false }) {
       <DetailCard icon="water" iconColor="#22c55e" title={result.multiFruit ? 'Average Oil Yield' : 'Oil Yield Prediction'} delay={delayBase + 100} colors={colors}>
         <View style={styles.detailRow}>
           <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>{result.multiFruit ? 'Average' : 'Predicted'}</Text>
-          <Text style={[styles.oilYieldBig, { color: colors.text }]}>
-            {(result.oilYieldPercent || result.averageOilYield || 0).toFixed(1)}%
-          </Text>
+          <View style={styles.predictedValueWrap}>
+            <Text style={[styles.oilYieldBig, { color: colors.text }]}>
+              {(result.oilYieldPercent || result.averageOilYield || 0).toFixed(1)}%
+            </Text>
+            <Pressable
+              onPress={() => setShowOilFormula((prev) => !prev)}
+              style={[styles.formulaToggleBtn, { borderColor: colors.borderLight, backgroundColor: colors.backgroundSecondary }]}
+            >
+              <Ionicons name={showOilFormula ? 'chevron-up' : 'chevron-down'} size={12} color={colors.textSecondary} />
+              <Text style={[styles.formulaToggleText, { color: colors.textSecondary }]}>How this % is estimated</Text>
+            </Pressable>
+          </View>
         </View>
+        {showOilFormula && (
+          <View style={[styles.formulaBox, { backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : '#f8fafc', borderColor: colors.borderLight }]}> 
+            <Text style={[styles.formulaTitle, { color: colors.text }]}>Actual percentage calculation</Text>
+            {result.multiFruit ? (
+              <>
+                <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>For multiple fruits, each fruit gets its own oil prediction first, then the app shows the average.</Text>
+                {multiOilValues.length > 0 ? (
+                  <>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Per-fruit oil yields: {multiOilValues.map((v) => `${formatCalc(v)}%`).join(', ')}</Text>
+                    <Text style={[styles.formulaEquation, { color: colors.text }]}>Average Oil Yield % = ({multiOilValues.map((v) => formatCalc(v)).join(' + ')}) ÷ {multiOilValues.length} = {formatCalc((result.oilYieldPercent || result.averageOilYield || 0))}%</Text>
+                  </>
+                ) : (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Average Oil Yield % = mean of all detected fruits' oil percentages.</Text>
+                )}
+
+                <Text style={[styles.formulaSubTitle, { color: colors.text }]}>Simple kernel mass estimate</Text>
+                <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>For each fruit: Kernel mass = 0.4 × ((Length × Width) ÷ (5.0 × 3.5))</Text>
+                {multiFruitEntries[0]?.dimensions?.length_cm != null && multiFruitEntries[0]?.dimensions?.width_cm != null && (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Example (Fruit #1): 0.4 × (({formatCalc(multiFruitEntries[0].dimensions.length_cm, 2)} × {formatCalc(multiFruitEntries[0].dimensions.width_cm, 2)}) ÷ 17.50) = {formatCalc(multiFruitEntries[0]?.dimensions?.kernel_mass_g, 3)} g</Text>
+                )}
+              </>
+            ) : (
+              <>
+                {hasDimensionData ? (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Fruit size used: {fruitLength.toFixed(2)} cm × {fruitWidth.toFixed(2)} cm</Text>
+                ) : (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Fruit size used: auto-estimated from image</Text>
+                )}
+                {kernelMass != null && (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Kernel amount used: {kernelMass.toFixed(3)} g</Text>
+                )}
+
+                {hasDimensionData && (
+                  <>
+                    <Text style={[styles.formulaSubTitle, { color: colors.text }]}>Simple kernel mass estimate</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Size factor = (Length × Width) ÷ (5.0 × 3.5)</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>= ({fruitLength.toFixed(2)} × {fruitWidth.toFixed(2)}) ÷ 17.50 = {formatCalc(sizeFactor, 3)}</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Estimated kernel mass = 0.4 × Size factor</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>= 0.4 × {formatCalc(sizeFactor, 3)} = {formatCalc(simpleKernelEstimate, 3)} g</Text>
+                    {kernelMass != null && (
+                      <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Kernel mass used by the system (after valid-range check): {kernelMass.toFixed(3)} g</Text>
+                    )}
+                  </>
+                )}
+
+                {mlPredictions ? (
+                  <>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>1) Random Forest result = {formatCalc(mlPredictions.random_forest)}%</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>2) Gradient Boosting result = {formatCalc(mlPredictions.gradient_boosting)}%</Text>
+                    <Text style={[styles.formulaEquation, { color: colors.text }]}>Final Oil Yield % = ({formatCalc(mlPredictions.random_forest)} + {formatCalc(mlPredictions.gradient_boosting)}) ÷ 2 = {formatCalc(result.oilYieldPercent)}%</Text>
+                  </>
+                ) : formulaComponents ? (
+                  <>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Base from fruit color = {formatCalc(formulaComponents.base_from_color)}%</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Kernel size adjustment = {formatCalc(formulaComponents.kernel_adjustment)}%</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Length adjustment = {formatCalc(formulaComponents.length_adjustment)}%</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Shape adjustment = {formatCalc(formulaComponents.aspect_adjustment)}%</Text>
+                    <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Weight adjustment = {formatCalc(formulaComponents.weight_adjustment)}%</Text>
+                    <Text style={[styles.formulaEquation, { color: colors.text }]}>
+                      Final Oil Yield % = {formatCalc(formulaComponents.base_from_color)} + {formatCalc(formulaComponents.kernel_adjustment)} + {formatCalc(formulaComponents.length_adjustment)} + {formatCalc(formulaComponents.aspect_adjustment)} + {formatCalc(formulaComponents.weight_adjustment)} = {formatCalc(result.oilYieldPercent)}%
+                    </Text>
+                  </>
+                ) : (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Calculation details are unavailable for this result source. The displayed value is the final percentage returned by the ML backend.</Text>
+                )}
+
+                {calcInputs?.color && (
+                  <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Color stage used: {String(calcInputs.color).toUpperCase()}</Text>
+                )}
+              </>
+            )}
+          </View>
+        )}
+        {minimumOilMl > 0 && (
+          <View style={styles.detailRow}>
+            <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Minimum Oil</Text>
+            <View style={styles.predictedValueWrap}>
+              <Text style={[styles.detailValue, { color: '#16a34a' }]}>Around {formatMl(minimumOilMl)} ml of Oil can be extracted</Text>
+              <Pressable
+                onPress={() => setShowOilMlFormula((prev) => !prev)}
+                style={[styles.formulaToggleBtn, { borderColor: colors.borderLight, backgroundColor: colors.backgroundSecondary }]}
+              >
+                <Ionicons name={showOilMlFormula ? 'chevron-up' : 'chevron-down'} size={12} color={colors.textSecondary} />
+                <Text style={[styles.formulaToggleText, { color: colors.textSecondary }]}>How this ml is estimated</Text>
+              </Pressable>
+            </View>
+          </View>
+        )}
+        {minimumOilMl > 0 && showOilMlFormula && (
+          <View style={[styles.formulaBox, { backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : '#f8fafc', borderColor: colors.borderLight }]}>
+            <Text style={[styles.formulaTitle, { color: colors.text }]}>Actual ml calculation</Text>
+            <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>The app estimates oil ml by fruit color, then applies a safety factor.</Text>
+            {mlBreakdown.map((row, index) => (
+              <Text key={`${row.color}-${index}`} style={[styles.formulaLine, { color: colors.textSecondary }]}>
+                {row.color.charAt(0) + row.color.slice(1).toLowerCase()}: {row.count} × {formatMl(row.perFruit)} × {formatCalc(row.safety, 2)} = {formatMl(row.subtotal)} ml
+              </Text>
+            ))}
+            {mlBreakdown.length > 0 ? (
+              <Text style={[styles.formulaEquation, { color: colors.text }]}>Around ml = {mlBreakdown.map((row) => formatMl(row.subtotal)).join(' + ')} = {formatMl(minimumOilMl)} ml</Text>
+            ) : (
+              <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Around ml = no valid fruit colors detected.</Text>
+            )}
+            <Text style={[styles.formulaLine, { color: colors.textSecondary }]}>Base values used: Yellow 0.05 ml, Brown 0.03 ml, Green 0.01 ml per fruit.</Text>
+          </View>
+        )}
         {result.multiFruit && result.oilYieldRange && (
           <View style={styles.detailRow}>
             <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Range</Text>
@@ -547,6 +746,7 @@ function ResultDisplay({ result, imageUri, imageName, showDetails, setShowDetail
   const oilYield = (result.oilYieldPercent || result.averageOilYield || 0).toFixed(1);
   const confidence = Math.round((result.overallConfidence || result.colorConfidence || 0) * 100);
   const catColor = getCategoryColor(result.category);
+  const minimumOilMl = estimateMinimumOilMl(result);
 
   // ── shared stats content (used in both layouts) ──
   const StatsContent = () => (
@@ -556,6 +756,11 @@ function ResultDisplay({ result, imageUri, imageName, showDetails, setShowDetail
           <View style={styles.resultStatMain}>
             <Text style={[styles.resultStatYield, { color: colors.text }]}>{oilYield}%</Text>
             <Text style={[styles.resultStatYieldLabel, { color: colors.textSecondary }]}>Avg. Oil Yield</Text>
+            {minimumOilMl > 0 && (
+              <Text style={[styles.resultMinOilText, { color: '#16a34a' }]}>
+                Around {formatMl(minimumOilMl)} ml of Oil can be extracted
+              </Text>
+            )}
           </View>
           <View style={[styles.resultStatBadge, { backgroundColor: '#7c3aed' }]}>
             <Ionicons name="apps" size={14} color="#fff" />
@@ -591,6 +796,11 @@ function ResultDisplay({ result, imageUri, imageName, showDetails, setShowDetail
           <View style={styles.resultStatMain}>
             <Text style={[styles.resultStatYield, { color: colors.text }]}>{oilYield}%</Text>
             <Text style={[styles.resultStatYieldLabel, { color: colors.textSecondary }]}>Oil Yield</Text>
+            {minimumOilMl > 0 && (
+              <Text style={[styles.resultMinOilText, { color: '#16a34a' }]}>
+                Around {formatMl(minimumOilMl)} ml of Oil can be extracted
+              </Text>
+            )}
           </View>
           <View style={[styles.resultStatBadge, { backgroundColor: catColor }]}>
             <Text style={styles.resultStatBadgeText}>{result.category || 'Unknown'}</Text>
@@ -700,6 +910,8 @@ function ComparisonSummary({ result1, result2, colors }) {
   const yieldDiff = (result2.oilYieldPercent || 0) - (result1.oilYieldPercent || 0);
   const catMatch = result1.category === result2.category;
   const avgConf = Math.round(((result1.colorConfidence || 0) + (result2.colorConfidence || 0)) * 50);
+  const baselineMinOilMl = estimateMinimumOilMl(result1);
+  const ownMinOilMl = estimateMinimumOilMl(result2);
 
   return (
     <Animated.View
@@ -715,7 +927,9 @@ function ComparisonSummary({ result1, result2, colors }) {
         { label: 'Category Match', value: catMatch ? 'Same' : 'Different', color: colors.text },
         { label: 'Avg Confidence', value: `${avgConf}%`, color: colors.text },
         { label: 'Baseline (Avg)', value: `${(result1.oilYieldPercent || 0).toFixed(1)}% oil`, color: '#3b82f6' },
+        { label: 'Baseline (Min Est.)', value: `Around ${formatMl(baselineMinOilMl)} ml`, color: '#2563eb' },
         { label: 'Your Image', value: `${(result2.oilYieldPercent || 0).toFixed(1)}% oil`, color: colors.primary },
+        { label: 'Your Image (Min Est.)', value: `Around ${formatMl(ownMinOilMl)} ml`, color: '#16a34a' },
       ].map((row, i) => (
         <View key={i} style={[styles.summaryRow, { borderBottomColor: colors.borderLight }]}>
           <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>{row.label}</Text>
@@ -958,6 +1172,7 @@ export default function ScanPage() {
                 averageOilYield: res.averageOilYield,
                 oilYieldRange: res.oilYieldRange,
                 fruits: res.fruits,
+                oil_calculation: res.raw?.oil_calculation || null,
               }).catch(() => {});
             }
           }
@@ -992,6 +1207,7 @@ export default function ScanPage() {
                 averageOilYield: res.averageOilYield,
                 oilYieldRange: res.oilYieldRange,
                 fruits: res.fruits,
+                oil_calculation: res.raw?.oil_calculation || null,
               }).catch(() => {});
             }
           }
@@ -1050,6 +1266,7 @@ export default function ScanPage() {
               referenceDetected: res1.referenceDetected, coinInfo: res1.coinInfo,
               interpretation: res1.interpretation,
               totalImages: res1.totalImages || res1.analyzedImages || 0,
+              oil_calculation: res1.raw?.oil_calculation || null,
             }).catch(() => {});
           }
           if (res2.success && res2.isTalisay !== false) {
@@ -1063,6 +1280,7 @@ export default function ScanPage() {
               yieldCategory: res2.yieldCategory, dimensions: res2.dimensions,
               referenceDetected: res2.referenceDetected, coinInfo: res2.coinInfo,
               interpretation: res2.interpretation,
+              oil_calculation: res2.raw?.oil_calculation || null,
             }).catch(() => {});
           }
         }
@@ -1669,6 +1887,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     marginTop: 1,
   },
+  resultMinOilText: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 18,
+  },
   resultStatBadge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1753,6 +1977,53 @@ const styles = StyleSheet.create({
   detailLabel: { fontSize: 12, fontWeight: '500' },
   detailValue: { fontSize: 13, fontWeight: '700' },
   oilYieldBig: { fontSize: 18, fontWeight: '800' },
+  predictedValueWrap: {
+    alignItems: 'flex-end',
+    gap: 4,
+    maxWidth: '68%',
+  },
+  formulaToggleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    borderWidth: 1,
+    borderRadius: BorderRadius.sm,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    ...Platform.select({ web: { cursor: 'pointer' } }),
+  },
+  formulaToggleText: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  formulaBox: {
+    marginTop: 4,
+    borderWidth: 1,
+    borderRadius: BorderRadius.sm,
+    padding: 10,
+    gap: 4,
+  },
+  formulaTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  formulaSubTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 4,
+    marginBottom: 2,
+  },
+  formulaLine: {
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  formulaEquation: {
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: '700',
+    marginTop: 2,
+  },
   spotBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 8, borderRadius: BorderRadius.sm, marginTop: 4 },
   dimGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
   dimCell: { flex: 1, minWidth: '40%', padding: Spacing.sm, borderRadius: BorderRadius.sm, alignItems: 'center', gap: 2 },
